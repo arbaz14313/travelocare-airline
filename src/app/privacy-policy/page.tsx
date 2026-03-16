@@ -46,7 +46,7 @@ const Policy = () => {
 
         <h5 >Payment Information Security: </h5>
       <p>
-Ruzain Enterprises <b>(Herbskraft.com)</b> does not collect or store your credit card, debit card, or banking information.
+Travelocare.cm does not collect or store your credit card, debit card, or banking information.
 During checkout, this information is securely transmitted directly to our payment gateway provider, who then transmits it to the payment network or bank for authorization.
 Our payment gateway partners are compliant with relevant security standards, such as PCI (Payment Card Industry Data Security Standard), and have robust data security measures in place.
 We do not retain any portion of your payment details.
