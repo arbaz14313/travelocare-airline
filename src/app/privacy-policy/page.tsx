@@ -85,15 +85,12 @@ While we take data security seriously and partner with reputable providers, we c
           <li>Payment Details like Credit Card/ Debit Card details along with their expiry date (billing address in case of
             international debit/credit card).</li>
           <li>Passport Number & frequent flyer number (wherever needed)</li>
-          <li>Lifestyle and social circumstances (for example, your hobbies)</li>
           <li>Family details/information (for example, your marital status and dependents)</li>
           <li>Employment and education details (for example, the organization you work for, your job title and your education details)</li>
-          <li>Financial and tax-related information (like your income, investments and tax residency)</li>
           <li>Postings or messages on any blogs, forums, platforms, wikis or social media applications of Travelocare and
             Travelocare&apos;s third parties</li>
           <li>IP address, browser type and language, your access times</li>
           <li>Information in any complaints you make</li>
-          <li>Details of how you use our products and services</li>
           <li>CCTV footage and other information we collect when you access our premises</li>
           <li>Recording of telephone calls to our representatives and call centers</li>
           <li>Details of how you like to interact with us (through email, SMS or WhatsApp) and other similar information relevant to our relationship</li>

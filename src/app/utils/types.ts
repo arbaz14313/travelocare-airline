@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface DropdownProps {
   title: React.ReactNode;
   items: { label: string; link: string }[];
@@ -7,7 +9,7 @@ export interface Modalprops {
   show: boolean;
   handleClose: () => void;
   setShow: any;
-  ispath?: boolean
+  ispath?: boolean;
 }
 
 export interface AutoSearchProps {
@@ -17,8 +19,6 @@ export interface AutoSearchProps {
   name?: string;
   setFieldValue?: any;
 }
-
-// utils/types.ts
 
 export interface AirportData {
   country: string;
@@ -41,25 +41,26 @@ export interface Sector {
 }
 
 export interface FormValues {
+  [x: string]: string | number | boolean | readonly string[] | Travelers | Sector[] | undefined;
   selectedTab: string;
   departFrom: string;
   arrivalTo: string;
-  arrivalDate: string;
+  departureDate: string;   // ✅ renamed from arrivalDate
+  returnDate: string;      // ✅ new — used for Round Trip
   travelers: Travelers;
   stop_mode: boolean;
   class_mode: boolean;
   sectors: Sector[];
-  name:string;
-  email:string;
-  phone:string
+  name: string;
+  email: string;
+  phone: string;
 }
 
 export interface SearchEngineProps {
-  handleToggle?:  () => void
+  handleToggle?: () => void;
 }
 
 export interface Heroprops {
   title: string;
-  description: string
+  description: string;
 }
-

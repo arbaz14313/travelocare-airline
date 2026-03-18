@@ -128,7 +128,7 @@ const Footer = () => {
                 Need live support?
                 <br />
                 <Link
-                  href={"mail:info@Reservationkart.com"}
+                  href={"mail:info@travelocare.com"}
                   className="fs-5 theme-text-primary"
                 >
                   info@travelocare.com
@@ -137,7 +137,7 @@ const Footer = () => {
               <div className="d-flex social  mt-2">
                 <Link
                   target="_blank"
-                  href="https://www.facebook.com/profile.php?id=61559553997456"
+                  href=""
                   className="fs-4 pe-3"
                 >
                   <i className="bi bi-facebook"></i>
@@ -147,14 +147,14 @@ const Footer = () => {
                 </Link>  */}
                 <Link
                   target="_blank"
-                  href="https://www.linkedin.com/company/reservationkart-com/"
+                  href=""
                   className="fs-4 pe-3"
                 >
                   <i className="bi bi-linkedin"></i>
                 </Link>
                 <Link
                   target="_blank"
-                  href="https://www.instagram.com/reservationkart.com_/"
+                  href=""
                   className="fs-4 pe-3"
                 >
                   <i className="bi bi-instagram"></i>

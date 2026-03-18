@@ -5,16 +5,59 @@ import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import { Loader, Header, CookieCard, FooterCall, Footer } from "./layoutComponent";
 
-
-import "./globals.css"; 
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Best flight booking, cheap flight, TraveloCare.com",
   keywords: "Flight Booking, Cheap Flight, International Flights at Lowest Price, Air Ticket Booking Bookings, cheap flight agency, airoplane reservation, airoplan ticket booking, Cheap flight ticket, traveller agency, Airoplane, cheap flights, airline tickets, plane tickets, cheap airline tickets, flight ticket, cheap flight tickets, flight booking, cheap plane tickets, air tickets, cheap air, cheap air tickets, airline flights, air ticket booking, fly tickets, air line tickets, multi city flights, cheap international flights, book flights online, cheap airline flights",
-  description: 'Reserve your cheap airline flights with ReservationKart. Your top traveller agency for airplane reservation and ticket booking.Your go-to traveler agency for affordable air travel. Fly smart, save more!',
-  verification: { google: "Rd1Lb2gHLk4aifgluXnh_Pl8CdB8GnAgBLGWd1oNQzA" }
+  description: 'Reserve your cheap airline flights with ReservationKart. Your top traveller agency for airplane reservation and ticket booking. Your go-to traveler agency for affordable air travel. Fly smart, save more!',
+  verification: { google: "Rd1Lb2gHLk4aifgluXnh_Pl8CdB8GnAgBLGWd1oNQzA" },
+
+  // ✅ Logo used correctly as Open Graph image (shows on WhatsApp, Facebook etc.)
+  openGraph: {
+    title: "Best flight booking, cheap flight, TraveloCare.com",
+    description: "Reserve your cheap airline flights with TraveloCare.",
+    url: "https://www.travelocare.com",
+    siteName: "TraveloCare",
+    images: [
+      {
+        url: "https://www.travelocare.com/logo.png", // ✅ must be a full public URL
+        width: 800,
+        height: 600,
+        alt: "TraveloCare Logo",
+      },
+    ],
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Best flight booking, cheap flight, TraveloCare.com",
+    description: "Reserve your cheap airline flights with TraveloCare.",
+    images: ["https://www.travelocare.com/logo.png"], // ✅ full public URL
+  },
+
+  // ✅ Canonical is a page URL, never an image path
+  alternates: {
+    canonical: "https://www.travelocare.com",
+  },
+
+  icons: {
+    icon: "/logo.png",          // ✅ browser tab icon
+    apple: "/logo.png",            // ✅ iOS home screen icon
+  },
+
+  // ✅ Fixed: noindex + nofollow was blocking Google from indexing your site!
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 
@@ -40,17 +83,19 @@ export default function RootLayout({
             `,
           }}
         />
-        <link rel="canonical" href="https://travelocare.com/" key='canonical' />
-        <meta name="robots" content="all" />
-        <meta name="googlebot" content="noindex,nofollow" />
+        {/* ✅ google-site-verification handled via metadata.verification above,
+            but keeping here as a fallback is also fine */}
         <meta name="google-site-verification" content="Rd1Lb2gHLk4aifgluXnh_Pl8CdB8GnAgBLGWd1oNQzA" />
         <meta charSet="UTF-8" />
       </head>
       <body className={inter.className}>
         <noscript>
-          <iframe src="https://www.googletagmanager.com/ns.html?id=AW-16615907817"
-            height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}>
-          </iframe>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=AW-16615907817"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
         </noscript>
 
         <Suspense fallback={<Loader />}>

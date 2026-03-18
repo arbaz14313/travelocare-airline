@@ -136,13 +136,7 @@ const RefundCancellation = () => {
               <i className="bi bi-dot"></i>In case of flight cancellation by the
               airline, a full refund will be provided.
             </li>
-            <h6 className="fw-bold mt-4">Flight Cancellations by Airline:</h6>
-            <li>
-              {" "}
-              <i className="bi bi-dot"> </i> If the airline cancels the flight,
-              customers are entitled to a full refund or rebooking on an
-              alternative flight at no additional charge.
-            </li>
+          
             <h6 className=" fw-bold mt-4">Significant Schedule Changes:</h6>
             <li>
               {" "}

@@ -55,6 +55,8 @@ export const initialValues = (isSearch: boolean): FormValues => ({
   name: "",
   email: "",
   phone: "",
+  departureDate: "",
+  returnDate: ""
 });
 
 export const searchOption = [

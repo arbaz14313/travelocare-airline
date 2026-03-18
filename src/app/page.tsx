@@ -78,46 +78,216 @@ const Home = () => {
       {/* Amazing travel deals section start */}
       <section className="travel-deal py-5 border-top" id="travelDeals">
         <div className="container">
+
+          {/* ── Section Header ── */}
           <div className="row my-5 text-center" data-aos="fade-up">
             <div className="col-12">
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "#eef6ff",
+                  border: "1px solid #c5deff",
+                  borderRadius: "100px",
+                  padding: "5px 16px",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  color: "#2a6dd9",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase" as const,
+                  marginBottom: "14px",
+                }}
+              >
+                ✈ Limited Time Offers
+              </div>
               <h3 className="h3 theme-text-secondary fw-bold mb-3">
-                Amazing travel deals &amp; More
+                Amazing Travel Deals &amp; More
               </h3>
               <p className="theme-text-accent-two mb-0">
-                Explore the best of travel with our exclusive deals for
+                Explore the best of travel with our exclusive deals —{" "}
+                <span style={{ fontWeight: 600, color: "#0b1f3a" }}>
+                  fares from as low as shown below*
+                </span>
               </p>
             </div>
           </div>
+
+          {/* ── Cards Grid ── */}
           <div className="row" data-aos="fade-down">
             {bestflightData.map((flights) => (
               <div
-                className="col-12 col-md-6 col-xl-4 mb-3"
+                className="col-12 col-md-6 col-xl-4 mb-4"
                 key={flights.arriving}
               >
-                <div className="card h-100 border-0 shadow-lg theme-bg-white  card-hover">
-                  <div className="card-body">
-                    <h6 className="card-title fw-bold">
-                      {flights.arriving}
-                      <i className="bi bi-arrow-right mx-2"></i>
-                      {flights.destination}
-                    </h6>
-                    <p className="card-text">{flights.date}</p>
-                    <div className="text-start">
-                      <span className="h5 fw-bold theme-text-primary">
-                        <span className="small" style={{ color: "#0b97bf" }}>
-                          From
-                        </span>
-                        <i className="bi bi-currency-dollar"></i>
-                        <span style={{ color: "#0b97bf" }}>
-                          {flights.price}
-                        </span>
+                <div
+                  className="card h-100 border-0 card-hover"
+                  style={{
+                    borderRadius: "14px",
+                    boxShadow: "0 4px 20px rgba(11,31,58,0.08)",
+                    overflow: "hidden",
+                    transition: "transform 0.2s, box-shadow 0.2s",
+                  }}
+                >
+                  {/* Card top accent bar */}
+                  <div style={{ height: "3px", background: "linear-gradient(90deg, #2a6dd9, #0b97bf)" }} />
+
+                  <div className="card-body" style={{ padding: "22px 24px" }}>
+
+                    {/* Route */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontSize: "15px",
+                          fontWeight: 700,
+                          color: "#0b1f3a",
+                        }}
+                      >
+                        {flights.arriving}
                       </span>
+                      <span style={{ color: "#2a6dd9", fontSize: "16px" }}>
+                        <i className="bi bi-arrow-right"></i>
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "15px",
+                          fontWeight: 700,
+                          color: "#0b1f3a",
+                        }}
+                      >
+                        {flights.destination}
+                      </span>
+                    </div>
+
+                    {/* Date */}
+                    <p
+                      className="card-text"
+                      style={{
+                        fontSize: "13px",
+                        color: "#6b7f96",
+                        marginBottom: "18px",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                    >
+                      <i className="bi bi-calendar3" style={{ color: "#2a6dd9" }}></i>
+                      {flights.date}
+                    </p>
+
+                    {/* Divider */}
+                    <div style={{ borderTop: "1px solid #f0f4fa", marginBottom: "16px" }} />
+
+                    {/* Price */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "flex-end",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div>
+                        <div
+                          style={{
+                            fontSize: "11px",
+                            fontWeight: 600,
+                            color: "#6b7f96",
+                            letterSpacing: "0.06em",
+                            textTransform: "uppercase" as const,
+                            marginBottom: "4px",
+                          }}
+                        >
+                          Starting from
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: "2px",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "13px",
+                              fontWeight: 600,
+                              color: "#0b97bf",
+                              marginTop: "4px",
+                            }}
+                          >
+                            $
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "28px",
+                              fontWeight: 800,
+                              color: "#0b97bf",
+                              lineHeight: 1,
+                            }}
+                          >
+                            {flights.price}
+                          </span>
+                          {/* ✅ Asterisk — pricing disclaimer */}
+                          <span
+                            style={{
+                              fontSize: "14px",
+                              fontWeight: 700,
+                              color: "#e8a020",
+                              marginTop: "2px",
+                            }}
+                          >
+                            *
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Book now chip */}
+                      <div
+                        style={{
+                          background: "#eef6ff",
+                          color: "#2a6dd9",
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          padding: "6px 14px",
+                          borderRadius: "100px",
+                          border: "1px solid #c5deff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        View Deal →
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+
+          {/* ✅ Asterisk disclaimer */}
+          <div className="row mt-2" data-aos="fade-up">
+            <div className="col-12">
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#9aacbe",
+                  lineHeight: 1.7,
+                  borderTop: "1px solid #e8f0f7",
+                  paddingTop: "16px",
+                }}
+              >
+                * Prices shown are per person, based on availability at time of search. Fares are not
+                guaranteed until ticketed. Prices may vary based on travel dates, seat availability,
+                and applicable taxes and fees. Additional baggage charges may apply.
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 
