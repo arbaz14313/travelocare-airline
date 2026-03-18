@@ -3,11 +3,17 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useState, useEffect } from "react";
-import Loader from './layoutComponent/loader'; 
+import Loader from "./layoutComponent/loader";
 
 import SearchEngine from "./container/searchEngine";
 import { CallModal } from "./component";
-import { bestflightData, featuredDeals, flightDestinations, recommendations, steps, } from "./utils/data";
+import {
+  bestflightData,
+  featuredDeals,
+  flightDestinations,
+  recommendations,
+  steps,
+} from "./utils/data";
 import {
   EasyImg,
   ExcImg,
@@ -32,12 +38,10 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-   
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
 
-   
     return () => clearTimeout(timer);
   }, []);
 
@@ -78,7 +82,6 @@ const Home = () => {
       {/* Amazing travel deals section start */}
       <section className="travel-deal py-5 border-top" id="travelDeals">
         <div className="container">
-
           {/* ── Section Header ── */}
           <div className="row my-5 text-center" data-aos="fade-up">
             <div className="col-12">
@@ -130,10 +133,14 @@ const Home = () => {
                   }}
                 >
                   {/* Card top accent bar */}
-                  <div style={{ height: "3px", background: "linear-gradient(90deg, #2a6dd9, #0b97bf)" }} />
+                  <div
+                    style={{
+                      height: "3px",
+                      background: "linear-gradient(90deg, #2a6dd9, #0b97bf)",
+                    }}
+                  />
 
                   <div className="card-body" style={{ padding: "22px 24px" }}>
-
                     {/* Route */}
                     <div
                       style={{
@@ -178,12 +185,20 @@ const Home = () => {
                         gap: "5px",
                       }}
                     >
-                      <i className="bi bi-calendar3" style={{ color: "#2a6dd9" }}></i>
+                      <i
+                        className="bi bi-calendar3"
+                        style={{ color: "#2a6dd9" }}
+                      ></i>
                       {flights.date}
                     </p>
 
                     {/* Divider */}
-                    <div style={{ borderTop: "1px solid #f0f4fa", marginBottom: "16px" }} />
+                    <div
+                      style={{
+                        borderTop: "1px solid #f0f4fa",
+                        marginBottom: "16px",
+                      }}
+                    />
 
                     {/* Price */}
                     <div
@@ -281,13 +296,13 @@ const Home = () => {
                   paddingTop: "16px",
                 }}
               >
-                * Prices shown are per person, based on availability at time of search. Fares are not
-                guaranteed until ticketed. Prices may vary based on travel dates, seat availability,
-                and applicable taxes and fees. Additional baggage charges may apply.
+                * Prices shown are per person, based on availability at time of
+                search. Fares are not guaranteed until ticketed. Prices may vary
+                based on travel dates, seat availability, and applicable taxes
+                and fees. Additional baggage charges may apply.
               </p>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -332,11 +347,37 @@ const Home = () => {
                       </span>
                       <i className="bi bi-currency-dollar"></i>
                       <span style={{ color: "#0b97bf" }}>{deal.price}</span>
+                      {/* ✅ Asterisk add kiya */}
+                      <sup
+                        style={{
+                          color: "#e8a020",
+                          fontWeight: 700,
+                          fontSize: "12px",
+                        }}
+                      >
+                        *
+                      </sup>
                     </span>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+            <div className="row mt-3" data-aos="fade-up">
+            <div className="col-12">
+              <p style={{
+                fontSize: "12px",
+                color: "#9aacbe",
+                lineHeight: 1.7,
+                borderTop: "1px solid #e8f0f7",
+                paddingTop: "16px",
+                marginBottom: 0,
+              }}>
+                * Prices are per person in USD, inclusive of base taxes. Fares are subject to 
+                availability and may change without notice. Additional fees for baggage, seat 
+                selection, and other services may apply. Prices not guaranteed until ticketed.
+              </p>
+            </div>
           </div>
           
         </div>
@@ -540,11 +581,19 @@ const Home = () => {
                     className="card-img-top img-fluid"
                     alt={item.alt}
                     title={item.title}
-                    style={{ objectFit: "cover", height: "250px", width: "100%" }}
+                    style={{
+                      objectFit: "cover",
+                      height: "250px",
+                      width: "100%",
+                    }}
                   />
                   <div className="card-body position-absolute top-0 start-0 p-3">
-                    <h6 className="card-title fw-bold text-white">{item.title}</h6>
-                    <span className="d-flex text-white font-14">Get prices</span>
+                    <h6 className="card-title fw-bold text-white">
+                      {item.title}
+                    </h6>
+                    <span className="d-flex text-white font-14">
+                      Get prices
+                    </span>
                   </div>
                   <a href={item.link} className="stretched-link"></a>
                 </div>
@@ -553,9 +602,9 @@ const Home = () => {
           </div>
         </div>
       </section>
-      
+
       {/* LOader */}
-      
+
       {/* call us modal */}
       <CallModal show={show} handleClose={handleToggle} setShow={setShow} />
     </main>
