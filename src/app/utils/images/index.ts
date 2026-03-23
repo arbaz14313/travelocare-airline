@@ -24,6 +24,9 @@ import Logo2 from "./logo/travelo-logo.png"
 // import FooterLogo from "./logo/NameKart - Logo.png";
 import AboutusImg1 from "./about-us/about1.jpg";
 import AboutusImg2 from "./about-us/about3.jpg";
+import LeaderImg1 from "./about-us/leaderImg1.jpeg"
+import LeaderImg2 from "./about-us/leaderImg2.jpeg"
+import LeaderImg3 from "./about-us/leaderImg3.jpeg"
 //Landing Page//
 import FlightImg from "./offers/Image1.png";
 import HotelImg from "./offers/Image2.png";
@@ -127,6 +130,9 @@ export {
   RecomandationImage5,
   RecomandationImage6,
   Caller,
-  LoaderImage
+  LoaderImage,
+  LeaderImg1,
+  LeaderImg2,
+  LeaderImg3
   
 };

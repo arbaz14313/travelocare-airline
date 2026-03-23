@@ -1,7 +1,28 @@
 import React from "react";
 import Image from "next/image";
 import { Hero } from "../component";
-import {AboutusImg1,AboutusImg2,EasyImg,ExcImg,LowestImg,Support,} from "../utils/images";
+import {AboutusImg1,AboutusImg2,EasyImg,ExcImg,LowestImg,Support,LeaderImg1, LeaderImg2, LeaderImg3} from "../utils/images";
+
+const leaders = [
+  {
+    img: LeaderImg1,
+    name: "Ayaz Khan",
+    title: "Managing Director",
+    bio: "As the Managing Director of TravelOCare, Ayaz Khan leads the company with a clear vision to set new standards in the travel services industry. With a strong background in business leadership and strategic growth, he is focused on building a premium, customer-first brand that travelers can rely on with confidence.",
+  },
+  {
+    img: LeaderImg2,
+    name: "Rohan Mache",
+    title: "Sales Director",
+    bio: "As the Sales Director, Rohan Mache is the driving force behind TravelOCare's growth and customer engagement strategy. With a proven track record in sales leadership and client acquisition, he ensures that every customer receives tailored travel solutions backed by competitive pricing and expert guidance.",
+  },
+  {
+    img: LeaderImg3,
+    name: "Mudassir Sayyed",
+    title: "Head of Operations",
+    bio: "As the Head of Operations, Mudassir Sayyed ensures that every aspect of TravelOCare's service is executed with precision, efficiency, and reliability. From booking management to customer support, he oversees the systems and processes that guarantee a seamless travel experience.",
+  },
+];
 
 const About = () => {
   return (
@@ -152,7 +173,78 @@ const About = () => {
         </div>
       </section>
 
-      
+        {/* Section 4 — Our Leadership Team */}
+      <section id="ourLeadershipTeam" className="step-container py-5">
+        <div className="container">
+          {/* Heading */}
+          <div className="text-center mb-2">
+            <h4 className="fs-2 fw-bold theme-text-secondary">
+              Our Leadership Team
+            </h4>
+          </div>
+          <div className="text-center mb-5">
+            <p className="theme-text-accent-one mx-auto" style={{ maxWidth: "680px" }}>
+              At TravelOCare, leadership is defined by excellence, precision,
+              and an unwavering commitment to delivering world-class travel
+              experiences. Our executive team brings together industry
+              expertise, strategic insight, and a deep understanding of
+              customer needs.
+            </p>
+          </div>
+ 
+          {/* Leader Cards */}
+          <div className="row justify-content-center g-4">
+            {leaders.map((leader, index) => (
+              <div className="col-12 col-sm-6 col-lg-4" key={index}>
+                <div
+                  className="card h-100 border-0 shadow-sm text-center"
+                  style={{ borderRadius: "16px", overflow: "hidden" }}
+                >
+                  {/* Photo */}
+                  <div
+                    className="mx-auto mt-4"
+                    style={{
+                      width: "140px",
+                      height: "140px",
+                      borderRadius: "50%",
+                      overflow: "hidden",
+                      position: "relative",
+                      border: "4px solid var(--theme-color-secondary, #0d6efd)",
+                    }}
+                  >
+                    <Image
+                      src={leader.img}
+                      alt={leader.name}
+                      layout="fill"
+                      objectFit="cover"
+                      objectPosition="top center"
+                    />
+                  </div>
+ 
+                  {/* Info */}
+                  <div className="card-body px-4 pb-4 pt-3">
+                    <h5 className="fw-bold theme-text-secondary mb-1">
+                      {leader.name}
+                    </h5>
+                    <p
+                      className="fw-semibold mb-3"
+                      style={{ color: "var(--theme-color-secondary, #0d6efd)", fontSize: "0.9rem" }}
+                    >
+                      {leader.title}
+                    </p>
+                    <p
+                      className="theme-text-accent-one mb-0"
+                      style={{ fontSize: "0.88rem", lineHeight: "1.65" }}
+                    >
+                      {leader.bio}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       
     </>
   );
