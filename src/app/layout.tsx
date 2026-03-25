@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: 'Reserve your cheap airline flights with ReservationKart. Your top traveller agency for airplane reservation and ticket booking. Your go-to traveler agency for affordable air travel. Fly smart, save more!',
   verification: { google: "Rd1Lb2gHLk4aifgluXnh_Pl8CdB8GnAgBLGWd1oNQzA" },
 
-  // ✅ Logo used correctly as Open Graph image (shows on WhatsApp, Facebook etc.)
+
   openGraph: {
     title: "Best flight booking, cheap flight, TraveloCare.com",
     description: "Reserve your cheap airline flights with TraveloCare.",
@@ -45,11 +45,11 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: "/logo.png",          // ✅ browser tab icon
-    apple: "/logo.png",            // ✅ iOS home screen icon
+    icon: "/logo2.png",
+    apple: "/logo2.png",          
   },
 
-  // ✅ Fixed: noindex + nofollow was blocking Google from indexing your site!
+
   robots: {
     index: true,
     follow: true,
@@ -83,8 +83,7 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* ✅ google-site-verification handled via metadata.verification above,
-            but keeping here as a fallback is also fine */}
+        
         <meta name="google-site-verification" content="Rd1Lb2gHLk4aifgluXnh_Pl8CdB8GnAgBLGWd1oNQzA" />
         <meta charSet="UTF-8" />
       </head>

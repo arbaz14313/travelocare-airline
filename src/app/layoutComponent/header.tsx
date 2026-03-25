@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, memo } from "react";
-import { Logo2, PCCiIcon } from "../utils/images";
+import { Logo2, PCCiIcon , LogoImg2} from "../utils/images";
 
 const Header = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -36,7 +36,7 @@ const Header = () => {
         <nav className="navbar navbar-expand-lg py-3 py-lg-0 px-0">
        <Link href="/" className="navbar-brand py-2">
   <Image
-    src={Logo2}
+    src={LogoImg2}
     alt="Travelocare flight booking"
     height={70}
     width={180}

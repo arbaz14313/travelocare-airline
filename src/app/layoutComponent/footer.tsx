@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, FormEvent, memo } from "react";
 
 import {
-  FooterLogo,
+  LogoImg2,
   SubscribeIcon,
   paymentMethod1,
 } from "../utils/images";
@@ -189,7 +189,7 @@ const Footer = () => {
 
             <div className="col-12 col-sm-12 col-lg-5 mb-5 mb-lg-0">
               <Image
-                src={FooterLogo}
+                src={LogoImg2}
                 alt={"reservationKart"}
                 className="w-100 h-auto"
               />
