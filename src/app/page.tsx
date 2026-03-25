@@ -53,27 +53,42 @@ const Home = () => {
     <main>
       <div className="pagewrap" id="home">
         <div className="head-wrapper">
-          <div className="search-engine">
-            <video autoPlay loop muted>
-              <source src="/flight_video1.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="container">
-              <div className="row">
-                <div className="col-12 col-lg-12  text-center position-relative">
-                  <h1 className="display-1 mb-2 theme-text-white theme-text-shadow">
-                    Your dream travel just <br /> a phone call away!
+          <div className="search-engine hero-section">
+            {/* Overlay */}
+            <div className="overlay"></div>
+
+            <div className="container position-relative z-2">
+              <div className="row justify-content-center">
+                <div className="col-lg-10 text-center">
+                  {/* Heading */}
+                  <h1 className="hero-title">
+                    Your dream travel just <br />
+                    <span className="highlight">a phone call away!</span>
                   </h1>
-                  <p className="mb-0 theme-text-white">
+
+                  {/* Subtitle */}
+                  <p className="hero-subtitle">
                     Travel has always proven to be the ultimate cure. Even if
-                    not pursued with fervor,
-                    <br />
-                    unfamiliar destinations consistently offer the tranquility
-                    you have been seeking.
+                    not pursued with fervor, unfamiliar destinations
+                    consistently offer the tranquility you have been seeking.
                   </p>
+
+                  {/* CTA Buttons */}
+                  <div className="mt-4 hero-cta">
+                    <a href="tel:+16176694209" className=" btn-call me-3">
+                      📞 Call Now
+                    </a>
+                    <a href="/flights" className="btn btn-outline-light">
+                      Explore Flights
+                    </a>
+                  </div>
                 </div>
               </div>
-              <SearchEngine handleToggle={handleToggle} />
+
+              {/* Search Box */}
+              <div className="mt-5">
+                <SearchEngine handleToggle={handleToggle} />
+              </div>
             </div>
           </div>
         </div>
@@ -363,23 +378,25 @@ const Home = () => {
               </div>
             ))}
           </div>
-            <div className="row mt-3" data-aos="fade-up">
+          <div className="row mt-3" data-aos="fade-up">
             <div className="col-12">
-              <p style={{
-                fontSize: "12px",
-                color: "#9aacbe",
-                lineHeight: 1.7,
-                borderTop: "1px solid #e8f0f7",
-                paddingTop: "16px",
-                marginBottom: 0,
-              }}>
-                * Prices are per person in USD, inclusive of base taxes. Fares are subject to 
-                availability and may change without notice. Additional fees for baggage, seat 
-                selection, and other services may apply. Prices not guaranteed until ticketed.
+              <p
+                style={{
+                  fontSize: "12px",
+                  color: "#9aacbe",
+                  lineHeight: 1.7,
+                  borderTop: "1px solid #e8f0f7",
+                  paddingTop: "16px",
+                  marginBottom: 0,
+                }}
+              >
+                * Prices are per person in USD, inclusive of base taxes. Fares
+                are subject to availability and may change without notice.
+                Additional fees for baggage, seat selection, and other services
+                may apply. Prices not guaranteed until ticketed.
               </p>
             </div>
           </div>
-          
         </div>
       </section>
 
