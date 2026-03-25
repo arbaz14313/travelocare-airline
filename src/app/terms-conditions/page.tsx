@@ -71,7 +71,7 @@ const TermsAndConditions = () => {
                     <ul className="list-unstyled">
                         <li>Refunds will be processed as per the airline fare rules and cancellation policy. Such refunds shall be subject to Travelocare receiving the same from the airlines. However, the convenience fee paid to Travelocare paid at the time of booking is a non-refundable fee.</li>
                         <li>All cancellations made directly with the airline need to be intimated to Travelocare, in order to initiate the process of refund. The processing time for refunds may vary depending on the mode of payment, bank etc. The refund shall be processed after deducting the Travelocare service fee which is independent of the convenience fee as mentioned above.</li>
-                        <li>The refund will be credited to the same account from which the payment was made. For example, if the User used a credit card, Travelocare will make an appropriate charge reversal to the same credit card; likewise, if the User used a debit card, ReservatinKart will credit the money to the same debit card.</li>
+                        <li>The refund will be credited to the same account from which the payment was made. For example, if the User used a credit card, Travelocare will make an appropriate charge reversal to the same credit card; likewise, if the User used a debit card, Travelocare will credit the money to the same debit card.</li>
                         <li>In the event of cancellation and refund of partially utilized tickets, upfront discount and promo code discount availed at the time of booking would be deducted from the refund amount.</li>
                     </ul>
                 </div>

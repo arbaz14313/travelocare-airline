@@ -14,7 +14,7 @@ const Policy = () => {
         <h6 className='sub-heading'>This Privacy Policy was last updated on 12th May 2024.</h6>
         <p>Travelocare Online Limited, including all legal entities under the Travelocare group
           (hereafter referred to as &quot;Travelocare&quot; or &quot;we&quot;) with an exception of Travelocare
-          Online Freight Services Private Limited (YOFSPLL), respects your (customers - hereafter referred as &quot;you&quot;
+          Online Freight Services Private Limited (TOFSPLL), respects your (customers - hereafter referred as &quot;you&quot;
           or &quot;user&quot;) privacy and values our
           relationship with our business partners, clients, third parties having contractual relationship with Travelocare
           (hereafter referred to as &quot;third party&quot; or &quot;service provider&quot;),
@@ -94,7 +94,7 @@ While we take data security seriously and partner with reputable providers, we c
           <li>CCTV footage and other information we collect when you access our premises</li>
           <li>Recording of telephone calls to our representatives and call centers</li>
           <li>Details of how you like to interact with us (through email, SMS or WhatsApp) and other similar information relevant to our relationship</li>
-          <li>Details shared by you over our chatbot - Yuva</li>
+          
         </ul>
         <p>b. The personal data we collect may also include &apos;sensitive&apos; or &apos;special categories&apos; of personal
           data such as details about your:</p>
@@ -102,7 +102,6 @@ While we take data security seriously and partner with reputable providers, we c
           <li>Dietary requirements (for example, while providing your meal preference during flight/ hotel bookings)</li>
           <li>Health (so that we can make it easy for you to access our buildings, products and services, and/or any special
             assistance required by you)</li>
-          <li>Sexual orientation (if you provide us with details of your spouse or partner)</li>
         </ul>
         <p>If you choose not to provide, or object to us processing the information we collect, we may not be able
           to process your instructions or continue to provide some or all of our services to you (including our clients)Personal
