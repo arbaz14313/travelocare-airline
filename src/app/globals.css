@@ -1640,7 +1640,7 @@ search-engine {
 }
 /* ── HEADER STATES ── */
 .header-top {
-  background: linear-gradient(90deg, #cce8f6 0%, #a8d8f0 50%, #7ec8ee 100%);
+  background: #ffffff;
   border-bottom: 1px solid rgba(14, 90, 138, 0.15);
   box-shadow: 0 2px 12px rgba(14, 90, 138, 0.10);
 }
@@ -1680,7 +1680,7 @@ search-engine {
 }
 
 .nav-link:hover {
-  color: #f97316 !important;
+  color: #0896ee !important;
 }
 
 /* ── PHONE LINK ── */
