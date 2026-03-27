@@ -7,12 +7,36 @@ import { SearchEngineProps } from "../utils/types";
 import { validationSchema } from "../utils/schema";
 import { initialValues, searchOption } from "../utils/data";
 import { useRouter } from 'next/navigation';
-
+import "./searchEngine.css"
 
 const today = new Date().toISOString().split('T')[0];
-
-// ✅ Capping constants
 const MAX_TRAVELERS = 9;
+
+/* ── tiny stat cards shown below the search bar ── */
+const STATS = [
+    {
+        big: '2.4M',
+        tag: '+12%',
+        label: 'Flights booked this year',
+        showProgress: true,
+    },
+    {
+        big: '₹1,240',
+        label: 'avg saved',
+        sub: 'Per booking vs. other platforms',
+    },
+    {
+        big: '98%',
+        inline: 'on-time',
+        label: 'Support resolution rate',
+        showDown: true,
+    },
+    {
+        big: '500+',
+        label: 'airlines',
+        sub: 'Partner airlines worldwide',
+    },
+];
 
 const SearchEngine: React.FC<SearchEngineProps> = ({ handleToggle }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -20,26 +44,21 @@ const SearchEngine: React.FC<SearchEngineProps> = ({ handleToggle }) => {
     const isSearch = usePathname() === '/search';
     const router = useRouter();
 
-    const toggleDropdown = () => {
-        setDropdownVisible(!dropdownVisible);
-    };
+    const toggleDropdown = () => setDropdownVisible(!dropdownVisible);
 
     const handleAddSector = () => {
-        const newSectorId = sectors.length + 1;
-        setSectors([...sectors, { id: newSectorId }]);
+        setSectors(prev => [...prev, { id: Date.now() }]);
     };
 
     const handleDeleteSector = (id: number) => {
-        const updatedSectors = sectors.filter(sector => sector.id !== id);
-        setSectors(updatedSectors);
+        setSectors(prev => prev.filter(s => s.id !== id));
     };
 
     const formik = useFormik({
         initialValues: initialValues(isSearch),
         validationSchema,
-        onSubmit: async (values, { setSubmitting }) => { // ✅ Step 2 — onSubmit replace karo
+        onSubmit: async (values, { setSubmitting }) => {
             handleToggle && handleToggle();
-
             const params = new URLSearchParams({
                 departFrom:    values.departFrom,
                 arrivalTo:     values.arrivalTo,
@@ -49,430 +68,391 @@ const SearchEngine: React.FC<SearchEngineProps> = ({ handleToggle }) => {
                 adults:        String(values.travelers.adults),
                 children:      String(values.travelers.children),
                 infants:       String(values.travelers.infants),
-                name:          values.name,
-                email:         values.email,
-                phone:         values.phone,
             });
-
             router.push(`/search?${params.toString()}`);
             setSubmitting(false);
         },
     });
 
-    const { values, handleChange, errors, touched, handleSubmit, setFieldValue, isSubmitting } = formik;
+    const {
+        values, handleChange, errors, touched,
+        handleSubmit, setFieldValue, isSubmitting,
+    } = formik;
 
     const isRoundTrip = values.selectedTab === 'Round Trip';
     const isMultiCity = values.selectedTab === 'Multi City';
-
-    // ✅ Destructure for easy capping logic
     const { adults, children, infants } = values.travelers;
     const totalTravelers = adults + children + infants;
 
-
-    
+    /* traveller button label */
+    const travelerLabel = [
+        `${adults} Adult${adults !== 1 ? 's' : ''}`,
+        children > 0 ? `${children} Child${children !== 1 ? 'ren' : ''}` : '',
+        infants  > 0 ? `${infants} Infant${infants  !== 1 ? 's' : ''}` : '',
+    ].filter(Boolean).join(' · ');
 
     return (
-        <form className="row mt-0 mt-lg-4 justify-content-center" onSubmit={handleSubmit}>
-            <div className={`col-12 ${isSearch ? 'col-lg-12' : 'col-lg-11'} mb-5 text-center position-relative`}>
-                <ul className={`nav nav-pills cust-pills ${isSearch ? 'd-none' : ''}`} id="pills-tab" role="tablist">
-                    {['One Way', 'Round Trip', 'Multi City'].map((city, index) => (
-                        <li className="nav-item" key={index}>
+        <form className="se-wrap" onSubmit={handleSubmit}>
+
+            {/* ── Trip-type tabs ── */}
+            <ul className={`se-tabs ${isSearch ? 'd-none' : ''}`}>
+                {(['One Way', 'Round Trip', 'Multi City'] as const).map((tab) => (
+                    <li key={tab}>
+                        <input
+                            type="radio"
+                            id={`tab-${tab}`}
+                            name="selectedTab"
+                            className="d-none"
+                            checked={values.selectedTab === tab}
+                            onChange={() => setFieldValue('selectedTab', tab)}
+                        />
+                        <label
+                            htmlFor={`tab-${tab}`}
+                            className={`se-tab-label ${values.selectedTab === tab ? 'active' : ''}`}
+                        >
+                            <span className="se-tab-dot" />
+                            {tab}
+                        </label>
+                    </li>
+                ))}
+            </ul>
+
+            {/* ── Main search bar ── */}
+            <div className="se-bar">
+
+                {/* Depart From */}
+                <div className="se-field se-field--auto">
+                    <AutoSearch
+                        setFieldValue={setFieldValue}
+                        label="Depart From"
+                        options={searchOption}
+                        error={errors?.departFrom}
+                        name="departFrom"
+                    />
+                </div>
+
+                {/* Swap divider with button */}
+                <div style={{ position: 'relative', width: 0, zIndex: 10 }}>
+                    <button
+                        type="button"
+                        className="se-swap-btn"
+                        title="Swap cities"
+                        onClick={() => {
+                            const from = values.departFrom;
+                            const to   = values.arrivalTo;
+                            setFieldValue('departFrom', to);
+                            setFieldValue('arrivalTo',  from);
+                        }}
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="13" height="13">
+                            <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div className="se-divider" />
+
+                {/* Arrival To */}
+                <div className="se-field se-field--auto">
+                    <AutoSearch
+                        setFieldValue={setFieldValue}
+                        label="Arrival To"
+                        options={searchOption}
+                        error={errors?.arrivalTo}
+                        name="arrivalTo"
+                    />
+                </div>
+
+                <div className="se-divider" />
+
+                {/* Departure Date */}
+                <div className="se-field se-field--date">
+                    <label className="se-label">Departure</label>
+                    <input
+                        type="date"
+                        name="departureDate"
+                        className="se-input"
+                        value={values.departureDate}
+                        min={today}
+                        onChange={(e) => {
+                            handleChange(e);
+                            if (isRoundTrip && values.returnDate && e.target.value > values.returnDate) {
+                                setFieldValue('returnDate', '');
+                            }
+                        }}
+                    />
+                    {!values.departureDate && (
+                        <span className="se-date-hint">Select date</span>
+                    )}
+                    {errors.departureDate && touched.departureDate && (
+                        <span className="se-error">{errors.departureDate}</span>
+                    )}
+                </div>
+
+                {/* Return Date — only for Round Trip */}
+                {isRoundTrip && (
+                    <>
+                        <div className="se-divider" />
+                        <div className="se-field se-field--date">
+                            <label className="se-label">Return</label>
                             <input
-                                type="radio"
-                                id={`tab-${city}`}
-                                name={'selectedTab'}
-                                className="d-none"
-                                checked={values.selectedTab === city}
-                                onChange={() => setFieldValue("selectedTab", city)}
+                                type="date"
+                                name="returnDate"
+                                className="se-input"
+                                value={values.returnDate}
+                                min={values.departureDate || today}
+                                onChange={handleChange}
                             />
-                            <label
-                                htmlFor={`tab-${city}`}
-                                className={`nav-link ${values.selectedTab === city ? 'active' : ''}`}
-                            >
-                                <span className="d-inline-block p-2 rounded-circle bg-white align-middle me-2"></span>
-                                {city}
-                            </label>
-                        </li>
-                    ))}
-                </ul>
-
-                <div className="row">
-                    <div className="col-12">
-                        <div className="search-pan row mx-0 theme-border-radius border">
-
-                            {/* Depart From */}
-                            <div className="col-12 col-lg-3 col-xl-2 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2">
-                                <div className="form-group">
-                                    <AutoSearch
-                                        setFieldValue={setFieldValue}
-                                        label={'Depart From'}
-                                        options={searchOption}
-                                        error={errors?.departFrom}
-                                        name={'departFrom'} />
-                                </div>
-                            </div>
-
-                            {/* Arrival To */}
-                            <div className="col-12 col-lg-3 col-xl-2 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2">
-                                <div className="form-group">
-                                    <AutoSearch
-                                        setFieldValue={setFieldValue}
-                                        label={'Arrival To'}
-                                        options={searchOption}
-                                        error={errors?.arrivalTo}
-                                        name={'arrivalTo'} />
-                                </div>
-                            </div>
-
-                            {/* Departure Date */}
-                            <div className={`col-12 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-0 pe-xl-2 
-                                ${isRoundTrip ? 'col-lg-3 col-xl-2' : 'col-lg-5 col-xl-2'}`}>
-                                <div className="form-group">
-                                    <label className="form-label">Departure Date</label>
-                                    <input
-                                        type="date"
-                                        name="departureDate"
-                                        className="form-control"
-                                        value={values?.departureDate}
-                                        onChange={(e) => {
-                                            handleChange(e);
-                                            if (isRoundTrip && values?.returnDate && e.target.value > values.returnDate) {
-                                                setFieldValue('returnDate', '');
-                                            }
-                                        }}
-                                        min={today}
-                                    />
-                                    {errors.departureDate && touched.departureDate &&
-                                        <div className="text-danger">{errors.departureDate}</div>}
-                                </div>
-                            </div>
-
-                            {/* Return Date — Round Trip only */}
-                            {isRoundTrip && (
-                                <div className="col-12 col-lg-3 col-xl-2 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-0 pe-xl-2">
-                                    <div className="form-group">
-                                        <label className="form-label">Return Date</label>
-                                        <input
-                                            type="date"
-                                            name="returnDate"
-                                            className="form-control"
-                                            value={values?.returnDate}
-                                            onChange={handleChange}
-                                            min={values?.departureDate || today}
-                                        />
-                                        {errors.returnDate && touched.returnDate &&
-                                            <div className="text-danger">{errors.returnDate}</div>}
-                                    </div>
-                                </div>
+                            {!values.returnDate && (
+                                <span className="se-date-hint">Select date</span>
                             )}
-
-                            {/* ✅ Travellers Dropdown with Capping */}
-                            <div className="col-12 col-lg-6 col-xl-3 ps-0 mb-2 mb-lg-0 mb-xl-0 pe-0 pe-lg-2">
-                                <div className="form-group border-0">
-                                    <label className="form-label">{`Traveller's`}</label>
-                                    <div className="dropdown" id="myDD3">
-                                        <button
-                                            className="dropdown-toggle form-control"
-                                            type="button"
-                                            id="travellerInfoOneway21"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                            onClick={toggleDropdown}
-                                        >
-                                            <span className="text-truncate">
-                                                {`${adults} adults - ${children} children - ${infants} infants`}
-                                            </span>
-                                        </button>
-
-                                        <div className={`dropdown-menu ${dropdownVisible ? 'show' : ''}`} aria-labelledby="travellerInfoOneway21">
-                                            <ul className="drop-rest">
-
-                                                {/* ✅ Adults — min 1, max 9 */}
-                                                <li>
-                                                    <div className="d-flex small">
-                                                        Adults
-                                                        <span className="ms-1 text-muted" style={{ fontSize: '11px' }}>(12+ yrs)</span>
-                                                    </div>
-                                                    <div className="ms-auto input-group plus-minus-input">
-                                                        <div className="input-group-button">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => {
-                                                                    const newAdults = Math.max(1, adults - 1);
-                                                                    setFieldValue('travelers.adults', newAdults);
-                                                                    // ✅ Auto-adjust children/infants if they exceed new adult count
-                                                                    if (children > newAdults) setFieldValue('travelers.children', newAdults);
-                                                                    if (infants > newAdults) setFieldValue('travelers.infants', newAdults);
-                                                                }}
-                                                                disabled={adults <= 1}
-                                                            >
-                                                                <i className="bi bi-dash"></i>
-                                                            </button>
-                                                        </div>
-                                                        <input
-                                                            className="input-group-field"
-                                                            type="number"
-                                                            name="travelers.adults"
-                                                            value={adults}
-                                                            readOnly
-                                                        />
-                                                        <div className="input-group-button">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => setFieldValue('travelers.adults', adults + 1)}
-                                                                disabled={adults >= MAX_TRAVELERS || totalTravelers >= MAX_TRAVELERS}
-                                                            >
-                                                                <i className="bi bi-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                {/* ✅ Children — min 0, max = adults count, total <= 9 */}
-                                                <li>
-                                                    <div className="d-flex small">
-                                                        Children
-                                                        <span className="ms-1 text-muted" style={{ fontSize: '11px' }}>(2–11 yrs)</span>
-                                                    </div>
-                                                    <div className="ms-auto input-group plus-minus-input">
-                                                        <div className="input-group-button">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => setFieldValue('travelers.children', Math.max(0, children - 1))}
-                                                                disabled={children <= 0}
-                                                            >
-                                                                <i className="bi bi-dash"></i>
-                                                            </button>
-                                                        </div>
-                                                        <input
-                                                            className="input-group-field"
-                                                            type="number"
-                                                            name="travelers.children"
-                                                            value={children}
-                                                            readOnly
-                                                        />
-                                                        <div className="input-group-button">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => setFieldValue('travelers.children', children + 1)}
-                                                                disabled={
-                                                                    children >= adults ||           // ✅ can't exceed adults
-                                                                    totalTravelers >= MAX_TRAVELERS  // ✅ total cap
-                                                                }
-                                                            >
-                                                                <i className="bi bi-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                {/* ✅ Infants — min 0, max = adults count, total <= 9 */}
-                                                <li>
-                                                    <div className="d-flex small">
-                                                        Infants
-                                                        <span className="ms-1 text-muted" style={{ fontSize: '11px' }}>(under 2 yrs)</span>
-                                                    </div>
-                                                    <div className="ms-auto input-group plus-minus-input">
-                                                        <div className="input-group-button">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => setFieldValue('travelers.infants', Math.max(0, infants - 1))}
-                                                                disabled={infants <= 0}
-                                                            >
-                                                                <i className="bi bi-dash"></i>
-                                                            </button>
-                                                        </div>
-                                                        <input
-                                                            className="input-group-field"
-                                                            type="number"
-                                                            name="travelers.infants"
-                                                            value={infants}
-                                                            readOnly
-                                                        />
-                                                        <div className="input-group-button">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => setFieldValue('travelers.infants', infants + 1)}
-                                                                disabled={
-                                                                    infants >= adults ||             // ✅ 1 infant per adult
-                                                                    totalTravelers >= MAX_TRAVELERS  // ✅ total cap
-                                                                }
-                                                            >
-                                                                <i className="bi bi-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                {/* ✅ Warning messages */}
-                                                {totalTravelers >= MAX_TRAVELERS && (
-                                                    <li className="px-2 py-1">
-                                                        <small className="text-danger">
-                                                            ⚠️ Maximum {MAX_TRAVELERS} travelers allowed per booking.
-                                                        </small>
-                                                    </li>
-                                                )}
-                                                {infants > 0 && infants >= adults && (
-                                                    <li className="px-2 py-1">
-                                                        <small className="text-warning">
-                                                            ⚠️ Infants cannot exceed number of adults.
-                                                        </small>
-                                                    </li>
-                                                )}
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Search Button */}
-                            <div className={`col-12 px-0 ${isMultiCity ? 'col-lg-6 col-xl-3' : 'col-lg-5 col-xl-2'}`}>
-                                <div className="d-flex">
-                                    {isMultiCity &&
-                                        <button type="button" className="btn sector-add me-1" onClick={handleAddSector}>
-                                            + Add Sector
-                                        </button>
-                                    }
-                                    <button type="submit" className="btn btn-search" disabled={isSubmitting}>
-                                        <span className="fw-bold"><i className="bi bi-search me-2"></i>Search</span>
-                                    </button>
-                                </div>
-                            </div>
-
+                            {errors.returnDate && touched.returnDate && (
+                                <span className="se-error">{errors.returnDate}</span>
+                            )}
                         </div>
+                    </>
+                )}
 
-                        {/* Name / Email / Phone */}
-                        <div className="row mt-4">
-                            <div className="col-12 col-lg-6">
-                                <div className="search-pan row mx-0 theme-border-radius border">
-                                    <div className="col-12 col-lg-4 col-xl-4 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2">
-                                        <div className="form-group">
-                                            <label className="form-label">Name</label>
-                                            <input
-                                                placeholder="Name"
-                                                type="text"
-                                                name="name"
-                                                className="form-control"
-                                                value={values?.name}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.name && touched.name && <div className="text-danger">{errors.name}</div>}
+                <div className="se-divider" />
+
+                {/* Travellers & Class */}
+                <div className="se-field se-field--travelers">
+                    <label className="se-label">Travellers &amp; Class</label>
+                    <div className="se-dropdown-wrap">
+                        <button
+                            type="button"
+                            className="se-travelers-btn"
+                            onClick={toggleDropdown}
+                        >
+                            <span>{travelerLabel} · Economy</span>
+                            <svg
+                                className={`se-chevron ${dropdownVisible ? 'open' : ''}`}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                width="14"
+                                height="14"
+                            >
+                                <path d="M6 9l6 6 6-6" />
+                            </svg>
+                        </button>
+                        <span className="se-travelers-sub">Max 9 per booking</span>
+
+                        {dropdownVisible && (
+                            <div className="se-travelers-panel">
+                                {([
+                                    { key: 'adults',   label: 'Adults',   sub: '12+ yrs',     min: 1, max: Math.min(MAX_TRAVELERS, MAX_TRAVELERS - totalTravelers + adults) },
+                                    { key: 'children', label: 'Children', sub: '2–11 yrs',    min: 0, max: Math.min(adults, MAX_TRAVELERS - totalTravelers + children) },
+                                    { key: 'infants',  label: 'Infants',  sub: 'Under 2 yrs', min: 0, max: Math.min(adults, MAX_TRAVELERS - totalTravelers + infants) },
+                                ] as const).map(({ key, label, sub, min, max }) => {
+                                    const val = values.travelers[key];
+                                    return (
+                                        <div className="se-counter-row" key={key}>
+                                            <div className="se-counter-label">
+                                                <span>{label}</span>
+                                                <small>{sub}</small>
+                                            </div>
+                                            <div className="se-counter">
+                                                <button
+                                                    type="button"
+                                                    className="se-counter-btn"
+                                                    disabled={val <= min}
+                                                    onClick={() => {
+                                                        const next = Math.max(min, val - 1);
+                                                        setFieldValue(`travelers.${key}`, next);
+                                                        if (key === 'adults') {
+                                                            if (children > next) setFieldValue('travelers.children', next);
+                                                            if (infants  > next) setFieldValue('travelers.infants',  next);
+                                                        }
+                                                    }}
+                                                >−</button>
+                                                <span className="se-counter-val">{val}</span>
+                                                <button
+                                                    type="button"
+                                                    className="se-counter-btn"
+                                                    disabled={val >= max || totalTravelers >= MAX_TRAVELERS}
+                                                    onClick={() => setFieldValue(`travelers.${key}`, val + 1)}
+                                                >+</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-12 col-lg-4 col-xl-4 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2">
-                                        <div className="form-group">
-                                            <label className="form-label">Email</label>
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                placeholder="Email address"
-                                                className="form-control"
-                                                value={values?.email}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.email && touched.email && <div className="text-danger">{errors.email}</div>}
-                                        </div>
-                                    </div>
-                                    <div className="col-12 col-lg-4 col-xl-4 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2 border-0">
-                                        <div className="form-group">
-                                            <label className="form-label">Phone</label>
-                                            <input
-                                                type="tel"
-                                                name="phone"
-                                                placeholder="Phone Number"
-                                                className="form-control"
-                                                value={values?.phone}
-                                                onChange={handleChange}
-                                            />
-                                            {errors.phone && touched.phone && <div className="text-danger">{errors.phone}</div>}
-                                        </div>
-                                    </div>
-                                </div>
+                                    );
+                                })}
+
+                                {totalTravelers >= MAX_TRAVELERS && (
+                                    <p className="se-warn">Max {MAX_TRAVELERS} travellers per booking.</p>
+                                )}
+
+                                <button
+                                    type="button"
+                                    className="se-done-btn"
+                                    onClick={() => setDropdownVisible(false)}
+                                >
+                                    Done
+                                </button>
                             </div>
-                        </div>
-
-                        {/* Multi City Sectors */}
-                        {isMultiCity &&
-                            sectors.map((sector, index) => (
-                                <div className="row mt-4" key={sector.id}>
-                                    <div className="col-12 col-lg-6">
-                                        <div className="search-pan row mx-0 theme-border-radius border">
-                                            <div className="col-12 col-lg-4 col-xl-4 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2">
-                                                <div className="form-group">
-                                                    <AutoSearch
-                                                        label={'Depart From'}
-                                                        options={searchOption}
-                                                        setFieldValue={setFieldValue}
-                                                        name={`sectors[${index}].departFrom`} />
-                                                </div>
-                                            </div>
-                                            <div className="col-12 col-lg-4 col-xl-4 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-2">
-                                                <div className="form-group">
-                                                    <AutoSearch
-                                                        label={'Arrival To'}
-                                                        options={searchOption}
-                                                        setFieldValue={setFieldValue}
-                                                        name={`sectors[${index}].arrivalTo`} />
-                                                </div>
-                                            </div>
-                                            <div className="col-11 col-lg-3 col-xl-3 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-0 pe-xl-2">
-                                                <div className="form-group border-0">
-                                                    <label className="form-label">Departure Date</label>
-                                                    <input
-                                                        type="date"
-                                                        name={`sectors[${index}].departureDate`}
-                                                        className="form-control"
-                                                        value={values?.sectors[index]?.departureDate}
-                                                        onChange={handleChange}
-                                                        min={today}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <button
-                                                type="button"
-                                                className="btn border-0 col-1 col-lg-1 col-xl-1 ps-0 mb-2 mb-xl-0 pe-0 pe-lg-0 pe-xl-2"
-                                                onClick={() => handleDeleteSector(sector.id)}
-                                                disabled={sectors.length <= 1}>
-                                                <i className="bi bi-trash" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        }
+                        )}
                     </div>
                 </div>
 
-                {/* Stop / Class toggle */}
-                <div className={`row ${isSearch ? 'd-none' : ''}`}>
-                    <div className="col-12 mt-4">
-                        <div className="d-flex flex-sm-row flex-column">
-                            <div className="me-2 mb-2 mb-lg-0">
-                                <div className="switch mode-switch">
-                                    <input type="checkbox"
-                                        id="stop_mode"
-                                        name="stop_mode"
-                                        onChange={handleChange} />
-                                    <label htmlFor="stop_mode" data-on="NonStop" data-off="Stop" className="mode-switch-inner" />
-                                </div>
-                            </div>
-                            <div className="me-2">
-                                <div className="switch mode-switch">
-                                    <input type="checkbox"
-                                        id="class_mode"
-                                        name="class_mode"
-                                        onChange={handleChange} />
-                                    <label htmlFor="class_mode" data-on="Premium" data-off="Economy" className="mode-switch-inner" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                {/* Search button */}
+                <div className="se-search-wrap">
+                    {isMultiCity && (
+                        <button type="button" className="se-add-sector" onClick={handleAddSector}>
+                            + Add Sector
+                        </button>
+                    )}
+                    <button type="submit" className="se-search-btn" disabled={isSubmitting}>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="M21 21l-4.35-4.35" />
+                        </svg>
+                        Search Flights
+                    </button>
                 </div>
-
             </div>
+
+            {/* ── Multi City sectors ── */}
+            {isMultiCity && sectors.map((sector, index) => (
+                <div className="se-bar se-bar--sector" key={sector.id}>
+                    <div className="se-field se-field--auto">
+                        <AutoSearch
+                            label="Depart From"
+                            options={searchOption}
+                            setFieldValue={setFieldValue}
+                            name={`sectors[${index}].departFrom`}
+                        />
+                    </div>
+                    <div className="se-divider" />
+                    <div className="se-field se-field--auto">
+                        <AutoSearch
+                            label="Arrival To"
+                            options={searchOption}
+                            setFieldValue={setFieldValue}
+                            name={`sectors[${index}].arrivalTo`}
+                        />
+                    </div>
+                    <div className="se-divider" />
+                    <div className="se-field se-field--date">
+                        <label className="se-label">Departure</label>
+                        <input
+                            type="date"
+                            name={`sectors[${index}].departureDate`}
+                            className="se-input"
+                            value={values?.sectors?.[index]?.departureDate ?? ''}
+                            onChange={handleChange}
+                            min={today}
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        className="se-remove-sector"
+                        onClick={() => handleDeleteSector(sector.id)}
+                        disabled={sectors.length <= 1}
+                        title="Remove sector"
+                    >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6l-1 14H6L5 6" />
+                            <path d="M10 11v6M14 11v6" />
+                            <path d="M9 6V4h6v2" />
+                        </svg>
+                    </button>
+                </div>
+            ))}
+
+            {/* ── Toggles ── */}
+            <div className={`se-toggles ${isSearch ? 'd-none' : ''}`}>
+                {/* Nonstop */}
+                <label className="se-toggle">
+                    <input type="checkbox" id="stop_mode" name="stop_mode" onChange={handleChange} defaultChecked />
+                    <span className="se-toggle-track">
+                        <span className="se-toggle-thumb" />
+                    </span>
+                    <span className="se-toggle-labels">
+                        <span className="se-toggle-off">Stop</span>
+                        <span className="se-toggle-on">&nbsp;Nonstop only</span>
+                    </span>
+                </label>
+
+                {/* Flexible dates */}
+                <label className="se-toggle">
+                    <input type="checkbox" id="flex_mode" name="flex_mode" onChange={handleChange} />
+                    <span className="se-toggle-track">
+                        <span className="se-toggle-thumb" />
+                    </span>
+                    <span className="se-toggle-labels">
+                        <span className="se-toggle-off">Fixed dates</span>
+                        <span className="se-toggle-on">&nbsp;Flexible dates</span>
+                    </span>
+                </label>
+
+                {/* Student fares */}
+                <label className="se-toggle">
+                    <input type="checkbox" id="class_mode" name="class_mode" onChange={handleChange} />
+                    <span className="se-toggle-track">
+                        <span className="se-toggle-thumb" />
+                    </span>
+                    <span className="se-toggle-labels">
+                        <span className="se-toggle-off">Regular</span>
+                        <span className="se-toggle-on">&nbsp;Student fares</span>
+                    </span>
+                </label>
+            </div>
+
+            {/* ── Stats row ── */}
+            {!isSearch && (
+                <div className="se-stats">
+                    {/* 2.4M */}
+                    <div className="se-stat-card">
+                        <div>
+                            <span className="se-stat-big">2.4M</span>
+                            <span className="se-stat-tag">+12%</span>
+                        </div>
+                        <div className="se-stat-label">Flights booked this year</div>
+                        <div className="se-progress">
+                            <div className="se-progress-bar" />
+                        </div>
+                    </div>
+
+                    {/* ₹1,240 */}
+                    <div className="se-stat-card">
+                        <div className="se-stat-big">₹1,240</div>
+                        <div className="se-stat-label">avg saved</div>
+                        <div className="se-stat-sub">Per booking vs. other platforms</div>
+                    </div>
+
+                    {/* 98% */}
+                    <div className="se-stat-card">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <span className="se-stat-big">98%</span>
+                            <span className="se-stat-inline">on-time</span>
+                            <div style={{
+                                marginLeft: 'auto',
+                                width: 26, height: 26,
+                                borderRadius: '50%',
+                                background: '#1e3a5f',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            }}>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#5a8ab5" strokeWidth="2" width="13" height="13">
+                                    <path d="M12 5v14M5 12l7 7 7-7" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div className="se-stat-label">Support resolution rate</div>
+                    </div>
+
+                    {/* 500+ */}
+                    <div className="se-stat-card">
+                        <div className="se-stat-big">500+</div>
+                        <div className="se-stat-label">airlines</div>
+                        <div className="se-stat-sub">Partner airlines worldwide</div>
+                    </div>
+                </div>
+            )}
+
         </form>
     );
-}
+};
 
 export default memo(SearchEngine);

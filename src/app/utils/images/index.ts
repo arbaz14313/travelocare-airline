@@ -71,6 +71,7 @@ import  RecomandationImage6 from "./recommended/rome.jpeg"
 
 import LoaderImage from "./loader/loaderimg0.gif"
 import LogoImg2 from "./logo/Logo_BackgroundRemoved.png"
+import HeroImg from "./logo/hero.img.png"
 
 export {
   
@@ -135,6 +136,7 @@ export {
   LeaderImg1,
   LeaderImg2,
   LeaderImg3,
-  LogoImg2
+  LogoImg2,
+  HeroImg
   
 };

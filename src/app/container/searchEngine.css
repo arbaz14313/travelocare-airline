@@ -1,0 +1,606 @@
+/* ─── SearchEngine Dark Theme ─────────────────────────────────────────────── */
+
+.se-wrap {
+    background: #0d1b2e;
+    border-radius: 16px;
+    padding: 28px 32px 36px;
+    font-family: 'Nunito Sans', sans-serif;
+    color: #e2eaf5;
+    width: 100%;
+}
+
+/* ── Tabs ── */
+.se-tabs {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+}
+
+.se-tab-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 20px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    color: #7fa8ce;
+    background: transparent;
+    transition: all 0.2s;
+    user-select: none;
+    margin-bottom: 10px;
+}
+
+.se-tab-label:hover {
+    color: #b8d4ef;
+    border-color: #2a4a6b;
+}
+
+.se-tab-label.active {
+    background: #1a6bc4;
+    color: #fff;
+    border-color: #1a6bc4;
+}
+
+.se-tab-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.85;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* ── Search Bar ── */
+.se-bar {
+    background: #13243d;
+    border-radius: 14px;
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #1e3a5f;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: visible;
+}
+
+/* ── Fields ── */
+.se-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 14px 18px;
+    flex: 1;
+    min-width: 0;
+    position: relative;
+}
+
+.se-field--date {
+    flex: 0 0 160px;
+}
+
+.se-field--travelers {
+    flex: 0 0 220px;
+    position: relative;
+}
+
+.se-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #5a8ab5;
+    margin-bottom: 5px;
+}
+
+/* City display (big letter + airport sub) */
+.se-city-big {
+    font-size: 22px;
+    font-weight: 700;
+    color: #d8eaf8;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+.se-city-sub {
+    font-size: 11px;
+    color: #5a8ab5;
+    margin-top: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Date input */
+.se-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #d8eaf8;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    width: 100%;
+    cursor: pointer;
+    padding: 0;
+}
+
+.se-input::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(2) hue-rotate(185deg);
+    cursor: pointer;
+}
+
+.se-date-hint {
+    font-size: 11px;
+    color: #3d6a99;
+    margin-top: 3px;
+}
+
+.se-error {
+    font-size: 11px;
+    color: #e55;
+    margin-top: 3px;
+    display: block;
+}
+
+/* Dividers */
+.se-divider {
+    width: 1px;
+    background: #1e3a5f;
+    margin: 10px 0;
+    flex-shrink: 0;
+}
+
+/* Swap button */
+.se-swap-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #1a6bc4;
+    border: 2px solid #13243d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    color: #fff;
+    transition: background 0.2s;
+    padding: 0;
+}
+
+.se-swap-btn:hover {
+    background: #2181e2;
+}
+
+/* AutoSearch field input style */
+.se-auto-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #d8eaf8;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    width: 100%;
+    padding: 0;
+}
+
+.se-auto-input::placeholder {
+    color: #3d6a99;
+    font-weight: 400;
+}
+
+/* ── Travellers Dropdown ── */
+.se-travelers-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #d8eaf8;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+}
+
+.se-travelers-sub {
+    font-size: 11px;
+    color: #3d6a99;
+    margin-top: 3px;
+}
+
+.se-chevron {
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    color: #5a8ab5;
+}
+
+.se-chevron.open {
+    transform: rotate(180deg);
+}
+
+.se-dropdown-wrap {
+    position: relative;
+}
+
+.se-travelers-panel {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    background: #13243d;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 16px 18px 12px;
+    z-index: 200;
+    min-width: 260px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.se-counter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e3a5f;
+}
+
+.se-counter-row:last-of-type {
+    border-bottom: none;
+}
+
+.se-counter-label span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #d8eaf8;
+    display: block;
+}
+
+.se-counter-label small {
+    font-size: 11px;
+    color: #5a8ab5;
+}
+
+.se-counter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.se-counter-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #2a4a6b;
+    background: transparent;
+    color: #7fa8ce;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-family: inherit;
+    padding: 0;
+}
+
+.se-counter-btn:hover:not(:disabled) {
+    border-color: #1a6bc4;
+    color: #5ab3ff;
+}
+
+.se-counter-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.se-counter-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: #d8eaf8;
+    min-width: 20px;
+    text-align: center;
+}
+
+.se-warn {
+    font-size: 12px;
+    color: #e2a94b;
+    margin-top: 8px;
+}
+
+.se-done-btn {
+    margin-top: 12px;
+    width: 100%;
+    background: #1a6bc4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.se-done-btn:hover {
+    background: #2181e2;
+}
+
+/* ── Search Button ── */
+.se-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    flex-shrink: 0;
+}
+
+.se-search-btn {
+    background: #1a6bc4;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: inherit;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.se-search-btn:hover:not(:disabled) {
+    background: #2181e2;
+}
+
+.se-search-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.se-add-sector {
+    background: transparent;
+    border: 1.5px solid #2a4a6b;
+    border-radius: 8px;
+    color: #7fa8ce;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+.se-add-sector:hover {
+    border-color: #1a6bc4;
+    color: #5ab3ff;
+}
+
+/* ── Multi City sector bar ── */
+.se-bar--sector {
+    background: #13243d;
+}
+
+.se-remove-sector {
+    background: transparent;
+    border: 1px solid #2a4a6b;
+    border-radius: 8px;
+    color: #5a8ab5;
+    padding: 7px 10px;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    margin: auto 12px;
+    transition: all 0.2s;
+}
+
+.se-remove-sector:hover:not(:disabled) {
+    border-color: #e55;
+    color: #e55;
+}
+
+.se-remove-sector:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+/* ── Toggles ── */
+.se-toggles {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.se-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.se-toggle input {
+    display: none;
+}
+
+.se-toggle-track {
+    width: 42px;
+    height: 22px;
+    background: #1e3a5f;
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.se-toggle input:checked ~ .se-toggle-track {
+    background: #1a6bc4;
+}
+
+.se-toggle-thumb {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: left 0.2s;
+}
+
+.se-toggle input:checked ~ .se-toggle-track .se-toggle-thumb {
+    left: 22px;
+}
+
+.se-toggle-labels {
+    display: flex;
+    gap: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #7fa8ce;
+}
+
+/* active label (right one when checked) */
+.se-toggle input:checked ~ .se-toggle-labels .se-toggle-off {
+    color: #7fa8ce;
+}
+.se-toggle input:checked ~ .se-toggle-labels .se-toggle-on {
+    color: #d8eaf8;
+}
+.se-toggle input:not(:checked) ~ .se-toggle-labels .se-toggle-off {
+    color: #d8eaf8;
+}
+.se-toggle input:not(:checked) ~ .se-toggle-labels .se-toggle-on {
+    color: #7fa8ce;
+}
+
+/* ── Stats ── */
+.se-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.se-stat-card {
+    background: #13243d;
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 16px 16px 14px;
+}
+
+.se-stat-big {
+    font-size: 24px;
+    font-weight: 700;
+    color: #d8eaf8;
+}
+
+.se-stat-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2a9d8f;
+    background: rgba(42, 157, 143, 0.15);
+    border-radius: 4px;
+    padding: 1px 6px;
+    margin-left: 5px;
+}
+
+.se-stat-label {
+    font-size: 12px;
+    color: #5a8ab5;
+    margin-top: 5px;
+}
+
+.se-stat-sub {
+    font-size: 11px;
+    color: #3d6a99;
+    margin-top: 3px;
+}
+
+.se-stat-inline {
+    font-size: 13px;
+    color: #5a8ab5;
+    margin-left: 4px;
+}
+
+.se-progress {
+    height: 3px;
+    background: #1e3a5f;
+    border-radius: 999px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+.se-progress-bar {
+    height: 100%;
+    background: #1a6bc4;
+    border-radius: 999px;
+    width: 55%;
+}
+
+/* ── Utility ── */
+.d-none {
+    display: none !important;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .se-wrap {
+        padding: 20px 16px 28px;
+    }
+
+    .se-bar {
+        flex-direction: column;
+        border-radius: 12px;
+    }
+
+    .se-divider {
+        width: 100%;
+        height: 1px;
+        margin: 0;
+    }
+
+    .se-field--date,
+    .se-field--travelers {
+        flex: unset;
+    }
+
+    .se-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .se-search-wrap {
+        justify-content: flex-end;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 500px) {
+    .se-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .se-toggles {
+        gap: 14px;
+    }
+}

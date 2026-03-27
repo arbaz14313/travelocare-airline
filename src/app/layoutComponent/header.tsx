@@ -10,14 +10,10 @@ const Header = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const path = usePathname();
 
-  const toggleNavbar = () => {
-    setCollapsed(!collapsed);
-  };
+  const toggleNavbar = () => setCollapsed((prev) => !prev);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
+    const handleScroll = () => setScrollPosition(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -27,42 +23,42 @@ const Header = () => {
   return (
     <header
       className={`header fixed-top ${isScrolled ? "header-scrolled" : "header-top"}`}
-      style={{ transition: "all 0.3s ease" }}
     >
       <div className="container">
-        <nav className="navbar navbar-expand-lg py-3 py-lg-2 px-0">
-
-          {/* LOGO */}
-          <Link href="/" className="navbar-brand py-1">
+        <nav className="navbar navbar-expand-lg px-0">
+          {/* ── LOGO — floating / raised ── */}
+          <Link href="/" className="navbar-brand py-0 me-4">
             <Image
               src={LogoImg2}
               alt="Travelocare"
-              height={50}
-              width={155}
-              className={`logo ${isScrolled ? "logo-scrolled" : "logo-top"}`}
+              height={100} // 👈 increase
+              width={400} // 👈 increase
+              className="logo-img"
               priority
             />
           </Link>
 
-          {/* TOGGLER */}
+          {/* ── TOGGLER ── */}
           <button
-            className="navbar-toggler px-1 btn rounded-0"
+            className="navbar-toggler px-1 border-0"
             type="button"
             onClick={toggleNavbar}
+            aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon" />
           </button>
 
-          {/* MENU */}
-          <div className={`collapse navbar-collapse ${collapsed ? "" : "show"}`}>
-            <ul className="navbar-nav me-auto"></ul>
+          {/* ── COLLAPSE MENU ── */}
+          <div
+            className={`collapse navbar-collapse ${collapsed ? "" : "show"}`}
+          >
+            <ul className="navbar-nav me-auto" />
 
             <ul className="navbar-nav mb-3 mb-lg-0 align-items-lg-center">
-
               <li className="nav-item">
                 <Link
-                  className={`nav-link pe-4 ${isScrolled ? "link-scrolled" : "link-top"}`}
                   href="/"
+                  className={`nav-link header-nav-link ${path === "/" ? "header-nav-active" : ""}`}
                 >
                   Home
                 </Link>
@@ -70,8 +66,8 @@ const Header = () => {
 
               <li className="nav-item">
                 <Link
-                  className={`nav-link pe-4 ${isScrolled ? "link-scrolled" : "link-top"}`}
                   href="/flights"
+                  className={`nav-link header-nav-link ${path === "/flights" ? "header-nav-active" : ""}`}
                 >
                   Flights
                 </Link>
@@ -79,8 +75,8 @@ const Header = () => {
 
               <li className="nav-item">
                 <Link
-                  className={`nav-link pe-4 ${isScrolled ? "link-scrolled" : "link-top"}`}
                   href="/about-us"
+                  className={`nav-link header-nav-link ${path === "/about-us" ? "header-nav-active" : ""}`}
                 >
                   About
                 </Link>
@@ -88,24 +84,20 @@ const Header = () => {
 
               <li className="nav-item">
                 <Link
-                  className={`nav-link pe-4 ${isScrolled ? "link-scrolled" : "link-top"}`}
                   href="/contact"
+                  className={`nav-link header-nav-link ${path === "/contact" ? "header-nav-active" : ""}`}
                 >
                   Contact
                 </Link>
               </li>
 
-              {/* CALL BUTTON */}
-              <Link
-                href="tel:+16176694209"
-                className={`nav-link d-flex align-items-center gap-2 fw-bold phone-link ${
-                  isScrolled ? "phone-scrolled" : "phone-top"
-                }`}
-              >
-                <i className="bi bi-telephone-fill"></i>
-                16176694209
-              </Link>
-
+              {/* ── CALL NOW BUTTON ── */}
+              <li className="nav-item">
+                <Link href="tel:+16176694209" className="btn-call-now">
+                  <i className="bi bi-telephone-fill" />
+                  Call Now
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>

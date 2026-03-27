@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Loader from "./layoutComponent/loader";
 
 import SearchEngine from "./container/searchEngine";
+import Service from "./component/Services"
 import { CallModal } from "./component";
 import {
   bestflightData,
@@ -25,6 +26,7 @@ import {
   RecomandationImage4,
   RecomandationImage5,
   RecomandationImage6,
+  HeroImg,
 } from "./utils/images";
 
 const Home = () => {
@@ -51,47 +53,115 @@ const Home = () => {
 
   return (
     <main>
-      <div className="pagewrap" id="home">
-        <div className="head-wrapper">
-          <div className="search-engine hero-section">
-            {/* Overlay */}
-            <div className="overlay"></div>
+      <section className="hero-section" id="home">
+        {/* Background */}
+        <Image
+          src={HeroImg}
+          alt="Travel"
+          fill
+          priority
+          className="hero-bg-img"
+        />
 
-            <div className="container position-relative z-2">
-              <div className="row justify-content-center">
-                <div className="col-lg-10 text-center">
-                  {/* Heading */}
-                  <h1 className="hero-title">
-                    Your dream travel just <br />
-                    <span className="highlight">a phone call away!</span>
-                  </h1>
+        {/* Multi-layer overlay */}
+        <div className="hero-overlay" />
 
-                  {/* Subtitle */}
-                  <p className="hero-subtitle">
-                    Travel has always proven to be the ultimate cure. Even if
-                    not pursued with fervor, unfamiliar destinations
-                    consistently offer the tranquility you have been seeking.
-                  </p>
+        {/* Ambient glow orbs */}
+        <div className="glow-orb glow-orb--left" />
+        <div className="glow-orb glow-orb--right" />
 
-                  {/* CTA Buttons */}
-                  <div className="mt-4 hero-cta">
-                    <a href="tel:+16176694209" className=" btn-call me-3">
-                      📞 Call Now
-                    </a>
-                    <a href="/flights" className="btn btn-outline-light">
-                      Explore Flights
-                    </a>
-                  </div>
-                </div>
+        {/* Main content */}
+        <div className="hero-inner">
+          {/* Badge */}
+          <div className="hero-badge">
+            <span className="badge-dot" />
+            Available 24/7 — Expert Flight Assistance
+          </div>
+
+          {/* Headline */}
+          <h1 className="hero-headline">
+            Your Dream Travel
+            <br />
+            <span className="hero-headline--accent">One Call Away</span>
+          </h1>
+
+          {/* Sub-copy */}
+          <p className="hero-sub">
+            Book flights at the best prices with expert assistance.
+            <br className="hero-sub-break" />
+            Fast, reliable, and always available for your convenience.
+          </p>
+
+          {/* CTAs */}
+          <div className="hero-ctas">
+            <a href="tel:+16176694209" className="cta-primary">
+              <span className="cta-icon">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  width="18"
+                  height="18"
+                >
+                  <path d="M6.62 10.79a15.53 15.53 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z" />
+                </svg>
+              </span>
+              Call Now
+            </a>
+
+            <a href="/flights" className="cta-secondary">
+              Explore Flights
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                width="16"
+                height="16"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+
+          {/* Stat pills */}
+          <div className="hero-stats">
+            {[
+              { value: "50K+", label: "Happy Travelers" },
+              { value: "200+", label: "Destinations" },
+              { value: "25%", label: "Avg. Savings" },
+            ].map(({ value, label }) => (
+              <div key={label} className="stat-pill">
+                <span className="stat-value">{value}</span>
+                <span className="stat-label">{label}</span>
               </div>
-
-              {/* Search Box */}
-              <div className="mt-5">
-                <SearchEngine handleToggle={handleToggle} />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+
+        {/* Floating promo card */}
+        <div className="promo-card">
+          <div className="promo-card__icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
+            </svg>
+          </div>
+          <div className="promo-card__text">
+            <span className="promo-card__title">Limited Offer</span>
+            <span className="promo-card__sub">
+              Save up to <strong>25% off</strong> on new bookings
+            </span>
+          </div>
+          <span className="promo-card__badge">NEW</span>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="scroll-indicator">
+          <div className="scroll-indicator__line" />
+        </div>
+      </section>
+      {/* Search Box */}
+      <div className="mt-5">
+        <SearchEngine handleToggle={handleToggle} />
       </div>
 
       {/* Amazing travel deals section start */}
@@ -278,58 +348,28 @@ const Home = () => {
                       </div>
 
                       {/* Book now chip */}
-                      <div
-                        style={{
-                          background: "#eef6ff",
-                          color: "#2a6dd9",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          padding: "6px 14px",
-                          borderRadius: "100px",
-                          border: "1px solid #c5deff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        View Deal →
-                      </div>
+                      <a href="tel:+16176694209" className="deal-call-btn">
+                        <i className="bi bi-telephone-fill" />
+                        Call Now
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-
-          {/* ✅ Asterisk disclaimer */}
-          <div className="row mt-2" data-aos="fade-up">
-            <div className="col-12">
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#9aacbe",
-                  lineHeight: 1.7,
-                  borderTop: "1px solid #e8f0f7",
-                  paddingTop: "16px",
-                }}
-              >
-                * Prices shown are per person, based on availability at time of
-                search. Fares are not guaranteed until ticketed. Prices may vary
-                based on travel dates, seat availability, and applicable taxes
-                and fees. Additional baggage charges may apply.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Features Section Starts */}
-      <section className="featured-deal border-top py-5" id="featuredFlights">
+      <section className="featured-deal " id="featuredFlights">
         <div className="container">
           {/* Section Header */}
           <div className="row my-5" data-aos="fade-up">
             <div className="col-12 text-center">
-              <h4 className="h3 theme-text-secondary fw-bold mb-3">
-                Featured Flights Deals
-              </h4>
+              <h2 className="h1 theme-text-secondary fw-bold mb-3">
+                Trending Routes
+              </h2>
               <p className="theme-text-accent-two mb-0">
                 Everything You Want &amp; More
               </p>
@@ -356,126 +396,83 @@ const Home = () => {
                       {deal.tripType}
                       <span className="ms-1">{deal.class}</span>
                     </span>
-                    <span className="h6 fw-bold theme-text-primary">
-                      <span className="small" style={{ color: "#0b97bf" }}>
-                        From
-                      </span>
-                      <i className="bi bi-currency-dollar"></i>
-                      <span style={{ color: "#0b97bf" }}>{deal.price}</span>
-                      {/* ✅ Asterisk add kiya */}
-                      <sup
-                        style={{
-                          color: "#e8a020",
-                          fontWeight: 700,
-                          fontSize: "12px",
-                        }}
-                      >
-                        *
-                      </sup>
-                    </span>
+                    <a href="tel:+16176694209" className="featured-call-btn">
+                      <i className="bi bi-telephone-fill" />
+                      Call Now
+                    </a>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="row mt-3" data-aos="fade-up">
-            <div className="col-12">
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#9aacbe",
-                  lineHeight: 1.7,
-                  borderTop: "1px solid #e8f0f7",
-                  paddingTop: "16px",
-                  marginBottom: 0,
-                }}
-              >
-                * Prices are per person in USD, inclusive of base taxes. Fares
-                are subject to availability and may change without notice.
-                Additional fees for baggage, seat selection, and other services
-                may apply. Prices not guaranteed until ticketed.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Why Book With Us */}
-      <section id="whyBookWithUs">
-        <div className="container my-4">
-          <div className="text-center mb-4">
-            <h4 className="fs-2 fw-bold theme-text-secondary">
-              Why Book With Us?
-            </h4>
+    <section id="whyBookWithUs" className="why-section">
+  <div className="container my-5">
+
+    <div className="text-center mb-5">
+      <h2 className="why-title">Why Book With Us?</h2>
+      <p className="why-subtitle">
+        Experience smooth, affordable and reliable travel services
+      </p>
+    </div>
+
+    <div className="row">
+
+      {/* CARD */}
+      <div className="col-md-3 mb-4">
+        <div className="why-card text-center">
+          <div className="why-icon">
+            <Image src={EasyImg} alt="easy booking" />
           </div>
-          <div className="row">
-            <div className="col-md-3 mb-4">
-              <div className="card h-100">
-                <div className="card-body text-center mb-2">
-                  <Image
-                    src={EasyImg}
-                    className="w-50 mb-3"
-                    alt="easy booking"
-                  />
-                  <h5 className="card-title">Easy Booking</h5>
-                  <p className="card-text">
-                    We offer easy and convenient flight bookings with attractive
-                    offers.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 mb-4">
-              <div className="card h-100">
-                <div className="card-body text-center mb-4">
-                  <Image
-                    src={LowestImg}
-                    className="w-50 mb-3"
-                    alt="best price"
-                  />
-                  <h5 className="card-title">Lowest Price</h5>
-                  <p className="card-test">
-                    We ensure low rates on hotel reservation, holiday packages
-                    and on flight tickets.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 mb-4">
-              <div className="card h-100">
-                <div className="card-body text-center mb-4">
-                  <Image
-                    src={ExcImg}
-                    className="w-50 mb-3"
-                    alt="Existing Deal"
-                  />
-                  <h5 className="card-title">Exciting Deals</h5>
-                  <p className="card-text">
-                    Enjoy exciting deals on flights, hotels, buses, car rental
-                    and tour packages.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3 mb-4">
-              <div className="card h-100">
-                <div className="card-body text-center mb-4">
-                  <Image
-                    src={Support}
-                    className="w-50 mb-3"
-                    alt="24/7 Support"
-                  />
-                  <h5 className="card-title">24/7 Support</h5>
-                  <p className="card-text">
-                    Get assistance 24/7 on any kind of travel related query. We
-                    are happy to assist you.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h5>Easy Booking</h5>
+          <p>
+            We offer easy and convenient flight bookings with attractive offers.
+          </p>
         </div>
-      </section>
+      </div>
+
+      <div className="col-md-3 mb-4">
+        <div className="why-card text-center">
+          <div className="why-icon">
+            <Image src={LowestImg} alt="best price" />
+          </div>
+          <h5>Lowest Price</h5>
+          <p>
+            We ensure low rates on hotels, packages and flight tickets.
+          </p>
+        </div>
+      </div>
+
+      <div className="col-md-3 mb-4">
+        <div className="why-card text-center">
+          <div className="why-icon">
+            <Image src={ExcImg} alt="deals" />
+          </div>
+          <h5>Exciting Deals</h5>
+          <p>
+            Enjoy deals on flights, hotels, buses and tour packages.
+          </p>
+        </div>
+      </div>
+
+      <div className="col-md-3 mb-4">
+        <div className="why-card text-center">
+          <div className="why-icon">
+            <Image src={Support} alt="support" />
+          </div>
+          <h5>24/7 Support</h5>
+          <p>
+            Get assistance anytime for all your travel queries.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       {/*  Most destination place start */}
       <section
@@ -526,6 +523,84 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+     <Service />
+      {/* Servides section start */}
+      <section className="services-section py-5">
+        <div className="container">
+          <div className="row g-4">
+            {/* Card 1 */}
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className="service-card text-center">
+                <div className="icon-box">
+                  <i className="bi bi-telephone-fill"></i>
+                </div>
+                <h5>Advice & Support</h5>
+                <p>
+                  Travel with confidence knowing our team is available 24/7 to
+                  assist you anytime.
+                </p>
+                <a href="tel:+16176694209" className="service-btn">
+                  <i className="bi bi-telephone-fill"></i> Call Now
+                </a>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className="service-card text-center">
+                <div className="icon-box">
+                  <i className="bi bi-globe"></i>
+                </div>
+                <h5>Air Ticketing</h5>
+                <p>
+                  Book flights worry-free with expert assistance available at
+                  every step.
+                </p>
+                <a href="tel:+16176694209" className="service-btn">
+                  <i className="bi bi-telephone-fill"></i> Call Now
+                </a>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className="service-card text-center">
+                <div className="icon-box">
+                  <i className="bi bi-building"></i>
+                </div>
+                <h5>Hotel Services</h5>
+                <p>
+                  Enjoy comfortable stays with 24/7 assistance and best price
+                  guarantee.
+                </p>
+                <a href="tel:+16176694209" className="service-btn">
+                  <i className="bi bi-telephone-fill"></i> Call Now
+                </a>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="col-12 col-md-6 col-lg-3">
+              <div className="service-card text-center">
+                <div className="icon-box">
+                  <i className="bi bi-geo-alt-fill"></i>
+                </div>
+                <h5>Tour Packages</h5>
+                <p>
+                  Explore destinations stress-free with our customized travel
+                  packages.
+                </p>
+                <a href="tel:+16176694209" className="service-btn">
+                  <i className="bi bi-telephone-fill"></i> Call Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services section end */}
 
       {/* How it Work  start */}
       <section className="py-5 bg-white border-top" id="howWork">
