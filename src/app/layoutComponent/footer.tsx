@@ -1,223 +1,300 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, FormEvent, memo } from "react";
+import { useState, useEffect, FormEvent, memo, useRef } from "react";
 
 import {
   LogoImg2,
   SubscribeIcon,
-  paymentMethod1,
 } from "../utils/images";
 
+import "../globals.css"; // ← adjust path to match your project structure
+
+const quickLinks = [
+  { label: "Home",       href: "/" },
+  { label: "About",      href: "/about-us" },
+  { label: "Flights",    href: "/flights" },
+  { label: "Contact Us", href: "/contact" },
+];
+
+const supportLinks = [
+  { label: "Contact",               href: "/contact" },
+  { label: "Privacy Policy",        href: "/privacy-policy" },
+  { label: "Terms & Conditions",    href: "/terms-conditions" },
+  { label: "Refund & Cancellation", href: "/refund-cancellation" },
+];
+
+// ── Component ───────────────────────────────────────────────────────────────
 const Footer = () => {
-  const [isActive, setIsActive] = useState(false);
-  const [email, setEmail] = useState("");
+  const [scrolled,   setScrolled]   = useState(false);
+  const [email,      setEmail]      = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+  const colsRef = useRef<HTMLDivElement>(null);
 
-
+  /* scroll-to-top visibility */
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY < 500) {
-        setIsActive(false);
-      } else {
-        setIsActive(true);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+  /* staggered column reveal via IntersectionObserver */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target
+              .querySelectorAll<HTMLElement>(".tc-col-anim")
+              .forEach((el) => el.classList.add("in-view"));
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    if (colsRef.current) observer.observe(colsRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const handleSubscribe = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("/api/subscribe", {
+      const res = await fetch("/api/subscribe", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-      const result = await response.json();
+      const result = await res.json();
       if (result?.status) {
-        setEmail("")
+        setEmail("");
+        setSubscribed(true);
+        setTimeout(() => setSubscribed(false), 3500);
       }
-    }
-    catch (error) {
-      console.log(error)
+    } catch (err) {
+      console.error(err);
     }
   };
 
   return (
     <>
-      <section className="py-5 theme-bg-primary">
+      {/* ══════════════════════════════════════════
+          SUBSCRIBE BAR
+      ══════════════════════════════════════════ */}
+      <section className="tc-subscribe-bar">
         <div className="container">
-          <div className="row justify-between items-center">
+          <div className="row align-items-center gy-4">
+
+            {/* left: icon + text */}
             <div className="col-12 col-lg-6">
-              <div className="d-flex  align-items-center">
-                <Image
-                  src={SubscribeIcon}
-                  alt="airline tickets"
-                  width={100}
-                  height={100}
-                />
-                <div className="ms-3">
-                  <h4 className="text-26 text-white fw-600">
-                    Your Travel Journey Starts Here
-                  </h4>
-                  <p className="text-white">{`Sign up and we'll send the best deals to you`}</p>
+              <div className="d-flex align-items-center gap-3">
+                <div className="tc-subscribe-icon-wrap">
+                  <Image src={SubscribeIcon} alt="subscribe" width={80} height={80} />
+                </div>
+                <div>
+                  <h4 className="tc-subscribe-title">Your Travel Journey Starts Here</h4>
+                  <p className="tc-subscribe-sub">
+                    Sign up and we&apos;ll send the best deals to you
+                  </p>
                 </div>
               </div>
             </div>
-            <div className="col-12 col-lg-5 offset-lg-1 align-self-center">
-              <form className="input-group subs-form" onSubmit={handleSubscribe}>
-                <input
-                  type="text"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="form-control border-0"
-                  placeholder="Your Email"
-                  aria-label="Your Email"
-                  aria-describedby="button-addon2"
-                />
-                <button
-                  className="btn btn-search"
-                  type="submit"
-                  id="button-addon2"
-                >
-                  Subscribe
-                </button>
-              </form>
+
+            {/* right: form */}
+            <div className="col-12 col-lg-5 offset-lg-1">
+              {subscribed ? (
+                <p className="tc-subscribed-msg">
+                  ✓ You&apos;re subscribed — great deals coming your way!
+                </p>
+              ) : (
+                <form className="tc-subs-form" onSubmit={handleSubscribe}>
+                  <input
+                    className="tc-subs-input"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="Enter your email address"
+                  />
+                  <button className="tc-subs-btn" type="submit">
+                    Subscribe
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
       </section>
-      <footer className="footer">
+
+      {/* ══════════════════════════════════════════
+          MAIN FOOTER
+      ══════════════════════════════════════════ */}
+      <footer className="tc-footer">
         <div className="container">
-          <div className="row">
-            <div className="col-12 col-sm-6 col-lg-5 mb-5 mb-lg-0">
-              <h5 className="mb-3 fs-6">Contact Us</h5>
-              <div className="flex-grow-1">
-                Location <br />
-                <address className="text-muted">
-                  Principal Place of Business 1309 Coffeen Avenue STE 19309 Sheridan Wyoming 82801 USA.
-                </address>
+          <div className="row gy-5" ref={colsRef}>
+
+            {/* ── Col 1 : Logo + Contact ─────────────────── */}
+            <div className="col-12 col-sm-6 col-lg-3 tc-col-anim">
+
+              {/* Logo with white background */}
+              <div className="tc-logo-wrap mb-2">
+                <div className="tc-logo-bg">
+                  <Image
+                    src={LogoImg2}
+                    alt="Travelocare"
+                    className="tc-logo-img"
+                    width={180}
+                    height={80}
+                  />
+                </div>
               </div>
-              <div className="flex-grow-1">
-                Customer Care
-                <br />
-                <Link
-                  className="fs-5 theme-text-primary"
-                  href={"tel:1888 5087143"}
-                >
-                +1 6176694209
+
+              <p className="tc-tagline">Travel With Trust &amp; Care</p>
+
+              <div className="tc-col-divider" />
+              <p className="tc-col-heading">Contact Us</p>
+
+              <p className="tc-contact-label">Location</p>
+              <address className="tc-contact-value" style={{ fontStyle: "normal" }}>
+                1309 Coffeen Avenue STE 19309<br />
+                Sheridan Wyoming 82801, USA
+              </address>
+
+              <p className="tc-contact-label">Customer Care</p>
+              <div className="mb-3">
+                <Link href="tel:+16176694209" className="tc-contact-link">
+                  +1 6176694209
                 </Link>
               </div>
-              <div className="flex-grow-1 mt-3">
-                Need live support?
-                <br />
-                <Link
-                  href={"mail:info@travelocare.com"}
-                  className="fs-5 theme-text-primary"
-                >
+
+              <p className="tc-contact-label">Email Support</p>
+              <div className="mb-3">
+                <Link href="mailto:info@travelocare.com" className="tc-contact-link">
                   info@travelocare.com
                 </Link>
               </div>
-              <div className="d-flex social  mt-2">
-                <Link
-                  target="_blank"
-                  href=""
-                  className="fs-4 pe-3"
-                >
-                  <i className="bi bi-facebook"></i>
-                </Link>
-                {/*} <Link href="#" className="fs-4 pe-3">
-                  <i className="bi bi-twitter"></i>
-                </Link>  */}
-                <Link
-                  target="_blank"
-                  href=""
-                  className="fs-4 pe-3"
-                >
-                  <i className="bi bi-linkedin"></i>
-                </Link>
-                <Link
-                  target="_blank"
-                  href=""
-                  className="fs-4 pe-3"
-                >
-                  <i className="bi bi-instagram"></i>
-                </Link>
-                <Link href="#" className="fs-4">
-                  <i className="bi bi-whatsapp"></i>
-                </Link>
-              </div>
-            </div>
 
-            <div className="col-12 col-sm-6 col-lg-2 mb-5 mb-lg-0">
-              <h5 className="mb-3 fs-6">Support</h5>
-              <div className="mt-3">
-                <ul className="fl-menu">
-                  <li className="nav-item ">
-                    <Link href="/contact" className="fs-8 text-dark">Contact</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link href="/privacy-policy" className="fs-8 text-dark">Privacy Policy</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link href="/terms-conditions"  className="fs-8 text-dark">Terms and Conditions</Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link href="/refund-cancellation"  className="fs-8 text-dark">
-                      Refund and Cancellation
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="col-12 col-sm-12 col-lg-5 mb-5 mb-lg-0">
-              <Image
-                src={LogoImg2}
-                alt={"reservationKart"}
-                className="w-100 h-auto"
-              />
-              <Image
-                src={paymentMethod1}
-                className="w-100 h-auto mt-4"
-                alt="plane tickets"
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 col-lg-6 mt-lg-5">
-              <p className="pt-2 mb-0 small theme-text-accent-one">
-                &copy; 2026 All Travelocare.com rights reserved.
-              </p>
-            </div>
-            <div className="col-12 col-lg-6 mt-5">
-              <ul className="footer-link d-flex flex-row flex-wrap justify-content-lg-center align-items-center">
-                {/* <Image src={paymentMethod} className='w-100 h-auto' alt='flight-booking' /> */}
+              {/* Social icons */}
+              <ul className="tc-social-list mt-3">
+                <li>
+                  <Link href="" target="_blank" className="tc-social-link" aria-label="Facebook">
+                    <i className="bi bi-facebook" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="" target="_blank" className="tc-social-link" aria-label="LinkedIn">
+                    <i className="bi bi-linkedin" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="" target="_blank" className="tc-social-link" aria-label="Instagram">
+                    <i className="bi bi-instagram" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="tc-social-link" aria-label="WhatsApp">
+                    <i className="bi bi-whatsapp" />
+                  </Link>
+                </li>
               </ul>
             </div>
+
+            {/* ── Col 2 : Quick Links ────────────────────── */}
+            <div className="col-12 col-sm-6 col-lg-3 tc-col-anim">
+              <div className="tc-col-divider" />
+              <p className="tc-col-heading">Quick Links</p>
+              <ul className="tc-nav-list">
+                {quickLinks.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link href={href} className="tc-nav-link">
+                      <i className="tc-arrow">→</i>
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ── Col 3 : Support ───────────────────────── */}
+            <div className="col-12 col-sm-6 col-lg-3 tc-col-anim">
+              <div className="tc-col-divider" />
+              <p className="tc-col-heading">Support</p>
+              <ul className="tc-nav-list">
+                {supportLinks.map(({ label, href }) => (
+                  <li key={href}>
+                    <Link href={href} className="tc-nav-link">
+                      <i className="tc-arrow">→</i>
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ── Col 4 : Why Choose Us ─────────────────── */}
+            <div className="col-12 col-sm-6 col-lg-3 tc-col-anim">
+              <div className="tc-col-divider" />
+              <p className="tc-col-heading">Why Travelocare</p>
+              <ul className="tc-nav-list">
+                {[
+                  { icon: "bi-shield-check", text: "100% Secure Booking" },
+                  { icon: "bi-headset",      text: "24/7 Customer Support" },
+                  { icon: "bi-tags",         text: "Best Price Guarantee" },
+                  { icon: "bi-airplane",     text: "1000+ Destinations" },
+                ].map(({ icon, text }) => (
+                  <li
+                    key={text}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "0.5rem",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    <i
+                      className={`bi ${icon}`}
+                      style={{
+                        color: "#00b4d8",
+                        fontSize: "1rem",
+                        marginTop: "2px",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span
+                      style={{
+                        color: "rgba(255,255,255,0.6)",
+                        fontSize: "0.88rem",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>{/* /row */}
+
+          {/* ── Bottom bar ─────────────────────────────── */}
+          <div className="tc-bottom-bar">
+            <p className="tc-copy">
+              &copy; 2026{" "}
+              <span className="tc-copy-brand">Travelocare.com</span>{" "}
+              — All rights reserved.
+            </p>
+            <p className="tc-copy">Designed with ♥ for travellers worldwide</p>
           </div>
         </div>
+
+        {/* Scroll-to-top */}
         <button
-          className={`scrollToTop ${isActive ? "active" : ""}`}
+          className={`tc-scroll-top${scrolled ? " visible" : ""}`}
           onClick={scrollToTop}
+          aria-label="Back to top"
         >
-          <i className="bi bi-chevron-double-up"></i>
+          <i className="bi bi-chevron-double-up" />
         </button>
       </footer>
     </>
