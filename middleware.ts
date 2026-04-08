@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import { get } from '@vercel/edge-config';
 
-export async function middleware(request: NextRequest) {
-  const isMaintenance = await get<boolean>('maintenance');
+export async function middleware() {
+  const isMaintenance = await get('maintenance');
 
   if (!isMaintenance) {
     return NextResponse.next();
