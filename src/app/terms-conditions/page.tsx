@@ -67,7 +67,7 @@ const TermsAndConditions = () => {
         </section>
 
         <section>
-          <h4 className="section-heading text-danger">
+          <h4 className="section-heading">
             Limitations of Liability
           </h4>
           <ul className="policy-list">
@@ -78,7 +78,7 @@ const TermsAndConditions = () => {
         </section>
 
         <section>
-          <h4 className="section-heading text-warning">Force Majeure</h4>
+          <h4 className="section-heading">Force Majeure</h4>
           <ul className="policy-list">
             <li>Includes natural disasters, pandemics, war, or civil unrest.</li>
             <li>We are not liable for events beyond our control.</li>
@@ -86,7 +86,7 @@ const TermsAndConditions = () => {
         </section>
 
         <section>
-          <h4 className="section-heading text-primary">
+          <h4 className="section-heading">
             Errors & Modifications
           </h4>
           <ul className="policy-list">

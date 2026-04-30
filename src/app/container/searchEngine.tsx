@@ -21,7 +21,7 @@ const STATS = [
         showProgress: true,
     },
     {
-        big: '₹1,240',
+        big: '$1,240',
         label: 'avg saved',
         sub: 'Per booking vs. other platforms',
     },
@@ -417,7 +417,7 @@ const SearchEngine: React.FC<SearchEngineProps> = ({ handleToggle }) => {
 
                     {/* ₹1,240 */}
                     <div className="se-stat-card">
-                        <div className="se-stat-big">₹1,240</div>
+                        <div className="se-stat-big">$1,240</div>
                         <div className="se-stat-label">avg saved</div>
                         <div className="se-stat-sub">Per booking vs. other platforms</div>
                     </div>
