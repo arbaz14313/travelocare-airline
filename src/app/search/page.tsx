@@ -292,14 +292,14 @@ const TravelerRow = ({ icon, label, sub }: { icon: string; label: string; sub: s
 
 const Search = () => {
   return (
-    <div style={{ paddingTop: "70px" }}> {/* ✅ Navigation se neeche shift */}
+    <div style={{ paddingTop: "150px" }}> 
       <div className="container">
         <SearchEngine />
       </div>
 
       <div className="container mt-10">
         <Suspense fallback={
-          <div style={{ textAlign: "center", padding: "40px", color: "#6b7f96" }}>
+          <div style={{ textAlign: "center", padding: "40px", color: "#6b7f96", paddingTop: "60px" }}>
             Loading results... 
           </div>
         }>

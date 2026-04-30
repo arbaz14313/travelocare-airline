@@ -25,15 +25,15 @@ const CookieCard = () => {
 
     const handleCancel = () => {
         setCookieConsent(true)
-        // Perform any action on cancel, if needed
+        
     };
 
     if (loading) {
-        return null; // Wait until the loading state is false before rendering
+        return null; 
     }
 
     if (cookieConsent) {
-        return null; // Don't render the component if consent is already given
+        return null; 
     }
 
     return (

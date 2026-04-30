@@ -170,8 +170,8 @@ const Footer = () => {
 
               <p className="tc-contact-label">Email Support</p>
               <div className="mb-3">
-                <Link href="mailto:info@travelocare.com" className="tc-contact-link">
-                  info@travelocare.com
+                <Link href="mailto:support@travelocare.com" className="tc-contact-link">
+                  support@travelocare.com
                 </Link>
               </div>
 

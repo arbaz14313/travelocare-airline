@@ -1,128 +1,110 @@
 import { Hero } from "../component";
 
-const RefundCancellation = () => {
+const TermsConditions = () => {
   return (
     <>
       <Hero
-        title="Refund & Cancellation Policy"
-        description="Clear and transparent cancellation and refund terms."
+        title="Terms & Conditions"
+        description="Please read these terms carefully before using our services."
       />
 
       <div className="container py-5 refund-policy">
 
         {/* Header */}
         <div className="mb-5">
-          <h2 className="main-heading">Refund & Cancellation Policy</h2>
+          <h2 className="main-heading">Terms and Conditions</h2>
           <p className="small-text">
-            Please review our refund and cancellation terms carefully before booking.
+            By using the services of <strong>Travel O Care</strong>, you agree to the following terms and conditions.
           </p>
         </div>
 
-        {/* Table */}
+        {/* Service Scope */}
         <section>
-          <h4 className="section-heading">Standard Cancellation Schedule</h4>
-
-          <div className="table-responsive mt-3">
-            <table className="table table-bordered">
-              <thead className="table-light">
-                <tr>
-                  <th>Cancellation Period</th>
-                  <th>Refund</th>
-                  <th>Fee</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>60+ Days</td>
-                  <td>Full Refund</td>
-                  <td>10% Admin Fee</td>
-                </tr>
-                <tr>
-                  <td>45 – 59 Days</td>
-                  <td>80% Refund</td>
-                  <td>20% Fee</td>
-                </tr>
-                <tr>
-                  <td>15 – 44 Days</td>
-                  <td>75% Refund</td>
-                  <td>25% Fee</td>
-                </tr>
-                <tr>
-                  <td>7 – 14 Days</td>
-                  <td>50% Refund</td>
-                  <td>50% Fee</td>
-                </tr>
-                <tr>
-                  <td>Less than 7 Days</td>
-                  <td className="text-danger fw-semibold">No Refund</td>
-                  <td>100% Fee</td>
-                </tr>
-                <tr>
-                  <td>No-Show</td>
-                  <td className="text-danger fw-semibold">No Refund</td>
-                  <td>100% Fee</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* Sections */}
-        <section>
-          <h4 className="section-heading">Single-Day Tours & Activities</h4>
+          <h4 className="section-heading">Service Scope</h4>
           <ul className="policy-list">
-            <li>Cancellations must be made at least 7 days in advance.</li>
-            <li>Late cancellations are not eligible for refunds.</li>
+            <li>Travel O Care provides travel assistance and booking support services.</li>
+            <li>We are not the airline, hotel, or direct travel service provider.</li>
+            <li>All bookings are subject to the terms and conditions of the respective airline or provider.</li>
           </ul>
         </section>
 
+        {/* Pricing */}
         <section>
-          <h4 className="section-heading">Refund Processing</h4>
+          <h4 className="section-heading">Pricing & Availability</h4>
           <ul className="policy-list">
-            <li>Refunds are processed within 15–45 business days.</li>
-            <li>Processing time depends on your bank and payment method.</li>
+            <li>Prices and availability may change without prior notice.</li>
+            <li>Final pricing is confirmed at the time of booking.</li>
           </ul>
         </section>
 
+        {/* Customer Responsibility */}
         <section>
-          <h4 className="section-heading">Unutilized Services</h4>
+          <h4 className="section-heading">Customer Responsibility</h4>
           <ul className="policy-list">
-            <li>No refunds for unused services.</li>
-            <li>Includes meals, entry tickets, and optional tours.</li>
+            <li>Customers must provide accurate and complete travel information.</li>
+            <li>We are not responsible for issues caused by incorrect details provided by the customer.</li>
           </ul>
         </section>
 
+        {/* Payments */}
         <section>
-          <h4 className="section-heading">Force Majeure</h4>
+          <h4 className="section-heading">Payments</h4>
           <ul className="policy-list">
-            <li>Applies to natural disasters, pandemics, or political unrest.</li>
-            <li>Refunds are handled on a case-by-case basis.</li>
+            <li>Payments are securely processed through trusted third-party payment providers.</li>
+            <li>We do not store full payment details.</li>
           </ul>
         </section>
 
+        {/* Cancellation */}
         <section>
-          <h4 className="section-heading">Important Exclusions</h4>
+          <h4 className="section-heading">Cancellations & Refunds</h4>
           <ul className="policy-list">
-            <li>Flights, hotels, and trains follow provider policies.</li>
-            <li>Peak season bookings may have stricter terms.</li>
-            <li className="highlight">Service fees are strictly non-refundable.</li>
+            <li>All cancellations and refunds are subject to airline fare rules and policies.</li>
+            <li className="highlight">Service fees charged by Travel O Care are non-refundable.</li>
+            <li>Refunds are not guaranteed and depend on airline or provider policies.</li>
           </ul>
         </section>
 
+        {/* Changes */}
         <section>
-          <h4 className="section-heading">Travel Insurance</h4>
+          <h4 className="section-heading">Changes & Modifications</h4>
           <ul className="policy-list">
-            <li>Strongly recommended for all travelers.</li>
-            <li>Covers medical emergencies and unexpected delays.</li>
+            <li>Changes to bookings are subject to airline rules.</li>
+            <li>Additional charges may apply depending on fare conditions.</li>
           </ul>
         </section>
 
+        {/* Liability */}
+        <section>
+          <h4 className="section-heading">Liability Disclaimer</h4>
+          <ul className="policy-list">
+            <li>Travel O Care is not responsible for delays, cancellations, or schedule changes by airlines.</li>
+            <li>We act only as a facilitator for booking assistance.</li>
+          </ul>
+        </section>
+
+        {/* Disputes */}
+        <section>
+          <h4 className="section-heading">Dispute Resolution</h4>
+          <ul className="policy-list">
+            <li>Any disputes must be reported within 24 hours of booking.</li>
+          </ul>
+        </section>
+
+        {/* Acceptance */}
+        <section>
+          <h4 className="section-heading">Acceptance of Terms</h4>
+          <ul className="policy-list">
+            <li>By using our website and services, you agree to these Terms and Conditions.</li>
+          </ul>
+        </section>
+
+        {/* Disclaimer */}
         <section>
           <h4 className="section-heading">Disclaimer</h4>
           <ul className="policy-list">
-            <li>TravelOcare is an independent travel concierge service.</li>
-            <li>We are not directly affiliated with airlines.</li>
-            <li>Pricing may change due to third-party updates.</li>
+            <li>Travel O Care is an independent travel assistance service provider.</li>
+            <li>We are not affiliated with any airline or travel provider.</li>
           </ul>
         </section>
 
@@ -131,4 +113,4 @@ const RefundCancellation = () => {
   );
 };
 
-export default RefundCancellation;
+export default TermsConditions;

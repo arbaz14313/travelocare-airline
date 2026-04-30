@@ -13,7 +13,7 @@ import {
   featuredDeals,
   flightDestinations,
   recommendations,
-  steps,
+  
 } from "./utils/data";
 import {
   EasyImg,
@@ -29,6 +29,60 @@ import {
   HeroImg,
 } from "./utils/images";
 
+
+const whyItems = [
+  {
+    icon: "🔒",
+    title: "Secure Payment Processing",
+    desc: "Your transactions are protected with industry-grade encryption and secure payment gateways.",
+  },
+  {
+    icon: "📧",
+    title: "Quick Email Confirmation",
+    desc: "Receive instant booking confirmations straight to your inbox — no waiting, no hassle.",
+  },
+  {
+    icon: "🎧",
+    title: "Dedicated Customer Support",
+    desc: "Our expert team is always on hand to resolve queries and personalise your travel experience.",
+  },
+  {
+    icon: "✈️",
+    title: "Reliable Travel Assistance",
+    desc: "From booking to boarding, count on us for dependable help at every step of your journey.",
+  },
+];
+
+const steps = [
+  {
+    id: 1,
+    icon: "📞",
+    stepTitle: "Contact Our Support Team",
+    stepDescription:
+      "Reach out to our travel experts via phone, chat, or email — available around the clock.",
+  },
+  {
+    id: 2,
+    icon: "🗺️",
+    stepTitle: "Get Travel Options & Assistance",
+    stepDescription:
+      "Our team presents the best flights, hotels, and packages tailored to your needs and budget.",
+  },
+  {
+    id: 3,
+    icon: "✅",
+    stepTitle: "Confirm Your Booking",
+    stepDescription:
+      "Review your itinerary and confirm securely with our trusted payment system.",
+  },
+  {
+    id: 4,
+    icon: "✉️",
+    stepTitle: "Receive E-Ticket via Email",
+    stepDescription:
+      "Get your confirmed e-ticket and travel documents delivered instantly to your inbox.",
+  },
+];
 const Home = () => {
   const [show, setShow] = useState<boolean>(false);
 
@@ -79,17 +133,13 @@ const Home = () => {
           </div>
 
           {/* Headline */}
-          <h1 className="hero-headline">
-            Your Dream Travel
-            <br />
-            <span className="hero-headline--accent">One Call Away</span>
-          </h1>
+          <h5 className="hero-headline">
+           Travel Assistance & Booking Support You Can Trust
+          </h5>
 
           {/* Sub-copy */}
           <p className="hero-sub">
-            Book flights at the best prices with expert assistance.
-            <br className="hero-sub-break" />
-            Fast, reliable, and always available for your convenience.
+           We provide professional travel assistance services including flight booking support, itinerary management, and reservation help. Our team ensures a smooth and hassle-free experience for all your travel needs.
           </p>
 
           {/* CTAs */}
@@ -145,13 +195,13 @@ const Home = () => {
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z" />
             </svg>
           </div>
-          <div className="promo-card__text">
+          {/* <div className="promo-card__text">
             <span className="promo-card__title">Limited Offer</span>
             <span className="promo-card__sub">
               Save up to <strong>25% off</strong> on new bookings
             </span>
           </div>
-          <span className="promo-card__badge">NEW</span>
+          <span className="promo-card__badge">NEW</span> */}
         </div>
 
         {/* Scroll indicator */}
@@ -410,69 +460,29 @@ const Home = () => {
 
       {/* Why Book With Us */}
     <section id="whyBookWithUs" className="why-section">
-  <div className="container my-5">
-
-    <div className="text-center mb-5">
-      <h2 className="why-title">Why Book With Us?</h2>
-      <p className="why-subtitle">
-        Experience smooth, affordable and reliable travel services
-      </p>
-    </div>
-
-    <div className="row">
-
-      {/* CARD */}
-      <div className="col-md-3 mb-4">
-        <div className="why-card text-center">
-          <div className="why-icon">
-            <Image src={EasyImg} alt="easy booking" />
+        <div className="container my-5">
+ 
+          <div className="text-center mb-5">
+            <h2 className="why-title">Why Book With Us?</h2>
+            <p className="why-subtitle">
+              Experience smooth, affordable and reliable travel services
+            </p>
           </div>
-          <h5>Easy Booking</h5>
-          <p>
-            We offer easy and convenient flight bookings with attractive offers.
-          </p>
-        </div>
-      </div>
-
-      <div className="col-md-3 mb-4">
-        <div className="why-card text-center">
-          <div className="why-icon">
-            <Image src={LowestImg} alt="best price" />
+ 
+          <div className="row">
+            {whyItems.map((item) => (
+              <div className="col-md-3 mb-4" key={item.title}>
+                <div className="why-card text-center">
+                  <div className="why-icon">{item.icon}</div>
+                  <h5>{item.title}</h5>
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-          <h5>Lowest Price</h5>
-          <p>
-            We ensure low rates on hotels, packages and flight tickets.
-          </p>
+ 
         </div>
-      </div>
-
-      <div className="col-md-3 mb-4">
-        <div className="why-card text-center">
-          <div className="why-icon">
-            <Image src={ExcImg} alt="deals" />
-          </div>
-          <h5>Exciting Deals</h5>
-          <p>
-            Enjoy deals on flights, hotels, buses and tour packages.
-          </p>
-        </div>
-      </div>
-
-      <div className="col-md-3 mb-4">
-        <div className="why-card text-center">
-          <div className="why-icon">
-            <Image src={Support} alt="support" />
-          </div>
-          <h5>24/7 Support</h5>
-          <p>
-            Get assistance anytime for all your travel queries.
-          </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+      </section>
 
       {/*  Most destination place start */}
       <section
@@ -603,45 +613,31 @@ const Home = () => {
       {/* Services section end */}
 
       {/* How it Work  start */}
-      <section className="py-5 bg-white border-top" id="howWork">
+       <section className="py-5 bg-white border-top hiw-section" id="howWork">
         <div className="container">
-          <div className="row overflow-hidden py-5">
-            {/* <!-- First Step --> */}
-            <div
-              className="col-12 col-lg-3 d-flex flex-column align-items-center text-center aos-init aos-animate"
-              data-aos="fade-right"
-            >
-              <p className="fw-bold text-accent-two">How it works?</p>
-              <h3 className="h3 fw-bold theme-text-secondary mb-3">
-                Amazing Deals Best Prices
+          <div className="hiw-outer">
+ 
+            {/* Intro */}
+            <div className="hiw-intro-col">
+              <span className="hiw-intro-tag">How it works?</span>
+              <h3 className="hiw-intro-heading">
+                Amazing Deals &amp; Best Prices
               </h3>
-              <p className="font-small fw-bold text-accent-one mb-0">
-                Search &amp; Book in 3 Simple Steps
-              </p>
+              <p className="hiw-intro-sub">Book in 4 Simple Steps</p>
             </div>
-
-            {steps.map((step) => (
-              <div
-                key={step.id}
-                className="col-12 col-lg-3 mb-4 mb-lg-0 aos-init aos-animate"
-              >
-                <div className="text-center shadow-lg border-radius process-card hover-bg-light p-4">
-                  <Image
-                    src={step.imageSrc}
-                    className="w-40 mb-2"
-                    height={60}
-                    alt={step.imageAlt}
-                  />
-                  <p className="pt-4 pb-2 mb-0">{step.stepTitle}</p>
-                  <p className="mb-0 pb-5 text-accent-two">
-                    {step.stepDescription}
-                  </p>
-                  <div className="step-corner">
-                    <div className="step-arrow">{step.id}</div>
-                  </div>
+ 
+            {/* Steps */}
+            <div className="hiw-grid">
+              {steps.map((step) => (
+                <div className="hiw-card" key={step.id}>
+                  <div className="hiw-icon">{step.icon}</div>
+                  <p className="hiw-step-title">{step.stepTitle}</p>
+                  <p className="hiw-step-desc">{step.stepDescription}</p>
+                  <div className="hiw-badge">{step.id}</div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+ 
           </div>
         </div>
       </section>

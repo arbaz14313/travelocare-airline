@@ -31,8 +31,8 @@ const Header = () => {
             <Image
               src={LogoImg2}
               alt="Travelocare"
-              height={100} // 👈 increase
-              width={400} // 👈 increase
+              height={100} 
+              width={400} 
               className="logo-img"
               priority
             />

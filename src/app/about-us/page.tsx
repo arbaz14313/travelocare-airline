@@ -52,17 +52,8 @@ const About = () => {
                   </div>
                 </div>
                 <p className="theme-text-accent-one p-0 font-normal text-base max-w-440 text-center text-md-start">
-                  Welcome to Travelocare.com, your ultimate destination for
-                  effortless and affordable travel solutions. As a leading cheap
-                  flight agency, we specialize in providing budget friendly
-                  options for all your travel needs, from airplane reservations
-                  to comprehensive travel packages. Book flights online
-                  effortlessly with our user-friendly platform, designed to help
-                  you find and secure cheap flight tickets with ease. Whether
-                  you are searching for airline tickets for a domestic trip or
-                  cheap international flights, we have you covered. Our
-                  extensive network ensures you get the best deals on plane
-                  tickets, making travel accessible and affordable.
+                 About Travel O Care Travel O Care is a US-based travel assistance company dedicated to helping customers with flight bookings, itinerary management, and reservation support.
+                  We act as a support service provider, assisting customers in finding suitable travel options and completing their bookings efficiently. Our goal is to provide a smooth and reliable travel experience through professional customer support.
                 </p>
               </div>
             </div>

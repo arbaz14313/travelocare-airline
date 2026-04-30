@@ -74,8 +74,8 @@ const Contact = () => {
                   <div>
                     <small className="text-muted">Email</small>
                     <div>
-                      <a href="mailto:info@travelocare.com" className="fw-semibold text-decoration-none">
-                        info@travelocare.com
+                      <a href="mailto:support@travelocare.com" className="fw-semibold text-decoration-none">
+                        support@travelocare.com
                       </a>
                     </div>
                   </div>

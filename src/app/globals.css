@@ -1311,32 +1311,135 @@ button.btn {
 }
 
 /* how it work start */
+        .hiw-section {
+          background: #fff;
+          border-top: 1px solid #e8edf5;
+          padding: 72px 0;
+        }
+ 
+        .hiw-outer {
+          display: grid;
+          grid-template-columns: 220px 1fr;
+          gap: 40px;
+          align-items: start;
+        }
+        @media (max-width: 991px) {
+          .hiw-outer { grid-template-columns: 1fr; }
+          .hiw-intro-col { text-align: center; }
+        }
+ 
+        .hiw-intro-tag {
+          display: inline-block;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          color: #1a6eff;
+          background: #e8f0ff;
+          border-radius: 20px;
+          padding: 4px 14px;
+          margin-bottom: 14px;
+        }
+ 
+        .hiw-intro-heading {
+          font-size: clamp(22px, 2.8vw, 30px);
+          font-weight: 800;
+          color: #0b1f3a;
+          line-height: 1.25;
+          margin-bottom: 14px;
+        }
+ 
+        .hiw-intro-sub {
+          font-size: 13px;
+          font-weight: 600;
+          color: #1a6eff;
+          margin: 0;
+        }
+ 
+        /* Cards grid */
+        .hiw-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+        }
+        @media (max-width: 1199px) {
+          .hiw-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 575px) {
+          .hiw-grid { grid-template-columns: 1fr; }
+        }
+ 
+        /* Card */
+        .hiw-card {
+          background: #fff;
+          border-radius: 18px;
+          padding: 32px 20px 52px;
+          text-align: center;
+          box-shadow: 0 10px 30px rgba(11, 31, 58, 0.08);
+          position: relative;
+          overflow: hidden;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+ 
+        .hiw-card::before {
+          content: "";
+          position: absolute;
+          top: 0; left: 0;
+          height: 4px; width: 100%;
+          background: linear-gradient(90deg, #00bfff, #0b5ed7);
+        }
+ 
+        .hiw-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 44px rgba(11, 31, 58, 0.13);
+        }
+ 
+        .hiw-icon {
+          width: 72px;
+          height: 72px;
+          border-radius: 50%;
+          background: rgba(0, 191, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 30px;
+          margin: 0 auto 18px;
+          transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .hiw-card:hover .hiw-icon {
+          transform: scale(1.18) rotate(8deg);
+          background: rgba(0, 191, 255, 0.2);
+        }
+ 
+        .hiw-step-title {
+          font-size: 14px;
+          font-weight: 700;
+          color: #0b1f3a;
+          margin-bottom: 10px;
+        }
+ 
+        .hiw-step-desc {
+          font-size: 13px;
+          color: #6b7f96;
+          line-height: 1.65;
+          margin: 0;
+        }
+ 
+        .hiw-badge {
+          position: absolute;
+          bottom: 0; right: 0;
+          width: 46px;
+          height: 46px;
+          background: linear-gradient(135deg, #00bfff, #0b5ed7);
+          border-radius: 16px 0 0 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          font-weight: 800;
+          color: #fff;
+        }
 
-.process-card {
-  transition: background-color 0.3s ease;
-}
-
-.process-card:hover {
-  background-color: #ec7e1b; /* Light background color on hover */
-}
-
-.step-corner {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-}
-
-.step-arrow {
-  background-color: #007bff; /* Your accent color */
-  color: #fff;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-}
 
 /* Recommendation section  */
 
@@ -1531,7 +1634,7 @@ button.btn {
 /* ---------- headline ---------- */
 .hero-headline {
   font-family: var(--hero-font-display);
-  font-size: clamp(48px, 7vw, 84px);
+  font-size: clamp(35px, 5vw, 65px);
   font-weight: 700;
   color: var(--hero-white);
   line-height: 1.1;
@@ -2508,96 +2611,84 @@ search-engine {
   border: 2px solid #00bfff;
 }
 
-/* Why section start */
-/* SECTION */
-.why-section {
-  background: #f4f8ff;
-}
 
-/* TITLE */
-.why-title {
-  font-size: 34px;
-  font-weight: 700;
-  color: #0b1f3a;
-}
-
-.why-subtitle {
-  color: #6b7f96;
-  font-size: 15px;
-  margin-top: 8px;
-}
-
-/* CARD */
-.why-card {
-  background: #ffffff;
-  padding: 30px 20px;
-  border-radius: 16px;
-
-  transition: all 0.35s ease;
-  box-shadow: 0 10px 25px rgba(11, 31, 58, 0.08);
-
-  height: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-/* ✨ top gradient line */
-.why-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 100%;
-  background: linear-gradient(90deg, #00bfff, #0b5ed7);
-}
-
-/* hover effect */
-.why-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(11, 31, 58, 0.15);
-}
-
-/* ICON */
-.why-icon {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 15px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(0, 191, 255, 0.1);
-  border-radius: 50%;
-
-  transition: all 0.3s ease;
-}
-
-/* icon image */
-.why-icon img {
-  width: 35px;
-  height: auto;
-}
-
-/* icon animation */
-.why-card:hover .why-icon {
-  transform: scale(1.2) rotate(8deg);
-  background: rgba(0, 191, 255, 0.2);
-}
-
-/* TEXT */
-.why-card h5 {
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #0b1f3a;
-}
-
-.why-card p {
-  font-size: 14px;
-  color: #6b7f96;
-}
-/* WHy section end */
+        /* ── Why section ── */
+        .why-section {
+          background: #f4f8ff;
+        }
+ 
+        .why-title {
+          font-size: 34px;
+          font-weight: 700;
+          color: #0b1f3a;
+        }
+ 
+        .why-subtitle {
+          color: #6b7f96;
+          font-size: 15px;
+          margin-top: 8px;
+        }
+ 
+        /* CARD */
+        .why-card {
+          background: #ffffff;
+          padding: 30px 20px;
+          border-radius: 16px;
+          transition: all 0.35s ease;
+          box-shadow: 0 10px 25px rgba(11, 31, 58, 0.08);
+          height: 100%;
+          position: relative;
+          overflow: hidden;
+        }
+ 
+        /* top gradient line */
+        .why-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 4px;
+          width: 100%;
+          background: linear-gradient(90deg, #00bfff, #0b5ed7);
+        }
+ 
+        .why-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 20px 40px rgba(11, 31, 58, 0.15);
+        }
+ 
+        /* ICON */
+        .why-icon {
+          width: 70px;
+          height: 70px;
+          margin: 0 auto 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(0, 191, 255, 0.1);
+          border-radius: 50%;
+          font-size: 30px;
+          line-height: 1;
+          transition: all 0.3s ease;
+        }
+ 
+        .why-card:hover .why-icon {
+          transform: scale(1.2) rotate(8deg);
+          background: rgba(0, 191, 255, 0.2);
+        }
+ 
+        /* TEXT */
+        .why-card h5 {
+          font-weight: 700;
+          margin-bottom: 10px;
+          color: #0b1f3a;
+        }
+ 
+        .why-card p {
+          font-size: 14px;
+          color: #6b7f96;
+        }
+      
 
 
 /* Footer section start */
